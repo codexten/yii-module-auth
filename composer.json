@@ -1,0 +1,23 @@
+{
+  "name": "codexten/yii-module-auth",
+  "type": "library",
+  "description": "Auth module for yii 2.0 or higher",
+  "require": {
+    "codexten/yii-user": "2.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "entero\\modules\\auth\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    },
+    "sconfig-plugin": {
+      "i18n": "src/config/i18n.php",
+      "moduleUser": "src/config/moduleUser.php",
+      "migrationNamespaces": "src/config/migrationNamespaces.php"
+    }
+  }
+}
