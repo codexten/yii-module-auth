@@ -1,0 +1,30 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/**
+ * @var yii\web\View $this
+ * @var codexten\yii\modules\auth\models\LoginForm $model
+ * @var codexten\yii\modules\auth\Module $module
+ */
+?>
+
+<?php $form = ActiveForm::begin([
+    'id' => 'login-form',
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'validateOnBlur' => false,
+    'validateOnType' => false,
+    'validateOnChange' => false,
+]) ?>
+
+<?= $form->field($model, 'login') ?>
+
+<?= $form->field($model, 'password')->passwordInput() ?>
+
+<?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
+
+<?= Html::submitButton(Yii::t('codexten:user', 'Sign in')) ?>
+
+<?php ActiveForm::end(); ?>
