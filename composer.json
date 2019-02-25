@@ -14,9 +14,9 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     },
-    "sconfig-plugin": {
+    "config-plugin": {
       "i18n": "src/config/i18n.php",
-      "moduleUser": "src/config/moduleUser.php",
+      "moduleAuth": "src/config/moduleAuth.php",
       "migrationNamespaces": "src/config/migrationNamespaces.php"
     }
   }

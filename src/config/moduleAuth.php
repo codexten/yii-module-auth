@@ -17,7 +17,7 @@ return [
     'components' => [
         'user' => [
             'identityClass' => \codexten\yii\modules\auth\models\User::class,
-            'loginUrl' => ['/user/account/login'],
+            'loginUrl' => ['/auth/account/login'],
         ],
         'urlManager' => [
             'rules' => [
@@ -29,7 +29,7 @@ return [
         ],
     ],
     'modules' => [
-        'user' => [
+        'auth' => [
             'class' => \codexten\yii\modules\auth\Module::class,
             'controllerNamespace' => 'codexten\yii\modules\auth\controllers',
             'viewPath' => '@codexten/yii/modules/auth/views',
@@ -86,18 +86,18 @@ return [
         'class' => '\codexten\yii\behaviors\GlobalAccessBehavior',
         'rules' => [
             [
-                'controllers' => ['user/account'],
+                'controllers' => ['auth/account'],
                 'allow' => true,
                 'roles' => ['?', '@'],
             ],
             [
-                'controllers' => ['user/registration'],
+                'controllers' => ['auth/registration'],
                 'allow' => true,
                 'actions' => ['register', 'connect'],
                 'roles' => ['?'],
             ],
             [
-                'controllers' => ['user/registration'],
+                'controllers' => ['auth/registration'],
                 'allow' => true,
                 'actions' => ['confirmation', 'resend'],
                 'roles' => ['?', '@'],
