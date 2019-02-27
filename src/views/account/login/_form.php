@@ -28,3 +28,11 @@ use yii\widgets\ActiveForm;
 <?= Html::submitButton(Yii::t('codexten:user', 'Sign in')) ?>
 
 <?php ActiveForm::end(); ?>
+
+<?php if ($module->enableRegistration): ?>
+
+    <p class="text-center">
+        <?= Html::a(Yii::t('codexten:user', 'Don\'t have an account? Sign up!'), ['/auth/registration/register']) ?>
+    </p>
+
+<?php endif ?>

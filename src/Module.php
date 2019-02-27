@@ -23,7 +23,7 @@ class Module extends \codexten\yii\base\Module
     public $enableFlashMessages = true;
 
     /** @var bool Whether to enable registration. */
-    public $enableRegistration = true;
+    public $enableRegistration = false;
 
     /** @var bool Whether to remove password field from registration form. */
     public $enableGeneratingPassword = false;

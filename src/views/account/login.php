@@ -9,7 +9,12 @@ $this->title = Yii::t('codexten:user', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('@codexten/yii/modules/auth/views/account/login/_form.php', [
-    'model' => $model,
-    'module' => $module,
-]) ?>
+<div class="page-auth-account-login">
+
+    <?= $this->render('@codexten/yii/modules/auth/views/account/login/_form.php', [
+        'model' => $model,
+        'module' => $module,
+    ]) ?>
+
+</div>
+
