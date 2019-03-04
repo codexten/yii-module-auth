@@ -88,8 +88,10 @@ class RegistrationController extends Controller
      *
      * @return string
      * @throws NotFoundHttpException
+     * @throws \Throwable
      * @throws \yii\base\ExitException
      * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
      */
     public function actionRegister()
     {
