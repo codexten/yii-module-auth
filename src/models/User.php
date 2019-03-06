@@ -248,7 +248,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 //    }
 
 //    /**
-//     * This method is used to register new user account. If Module::enableConfirmation is set true, this method
+//     * This method is used to register new user account. If AuthModule::enableConfirmation is set true, this method
 //     * will generate new confirmation token and use mailer to send it to the user.
 //     *
 //     * @return bool
@@ -367,7 +367,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 //                \Yii::$app->session->setFlash('danger',
 //                    \Yii::t('codexten:user', 'An error occurred processing your request'));
 //            } elseif ($this->finder->findUser(['email' => $this->unconfirmed_email])->exists() == false) {
-//                if ($this->module->emailChangeStrategy == Module::STRATEGY_SECURE) {
+//                if ($this->module->emailChangeStrategy == AuthModule::STRATEGY_SECURE) {
 //                    switch ($token->type) {
 //                        case Token::TYPE_CONFIRM_NEW_EMAIL:
 //                            $this->flags |= self::NEW_EMAIL_CONFIRMED;
@@ -391,7 +391,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 //                            break;
 //                    }
 //                }
-//                if ($this->module->emailChangeStrategy == Module::STRATEGY_DEFAULT
+//                if ($this->module->emailChangeStrategy == AuthModule::STRATEGY_DEFAULT
 //                    || ($this->flags & self::NEW_EMAIL_CONFIRMED && $this->flags & self::OLD_EMAIL_CONFIRMED)) {
 //                    $this->email = $this->unconfirmed_email;
 //                    $this->unconfirmed_email = null;

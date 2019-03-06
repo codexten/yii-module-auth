@@ -10,7 +10,7 @@
 /**
  * @var yii\web\View $this
  * @var \codexten\yii\web\User $model
- * @var \codexten\yii\modules\auth\Module $module
+ * @var \codexten\yii\modules\auth\AuthModule $module
  */
 
 $this->title = Yii::t('codexten:user', 'Sign up');

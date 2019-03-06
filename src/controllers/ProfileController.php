@@ -23,7 +23,7 @@ use yii\web\NotFoundHttpException;
 /**
  * ProfileController shows users profiles.
  *
- * @property \codexten\yii\modules\auth\Module $module
+ * @property \codexten\yii\modules\auth\AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */

@@ -7,14 +7,14 @@ use codexten\yii\modules\auth\Module;
 /**
  * Trait ModuleTrait
  *
- * @property-read Module $module
+ * @property-read AuthModule $module
  * @package codexten\yii\modules\auth\traits
  * @author Jomon Johnson <cto@codexten.com>
  */
 trait ModuleTrait
 {
     /**
-     * @return Module
+     * @return AuthModule
      */
     public function getModule()
     {

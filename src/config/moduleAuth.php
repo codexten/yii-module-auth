@@ -30,7 +30,7 @@ return [
     ],
     'modules' => [
         'auth' => [
-            'class' => \codexten\yii\modules\auth\Module::class,
+            'class' => \codexten\yii\modules\auth\AuthModule::class,
             'controllerNamespace' => 'codexten\yii\modules\auth\controllers',
             'viewPath' => '@codexten/yii/modules/auth/views',
             'layoutPath' => '@app/views/layout',

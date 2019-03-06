@@ -23,7 +23,7 @@ use yii\web\Response;
 /**
  * Controller that manages user authentication process.
  *
- * @property Module $module
+ * @property AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */

@@ -14,6 +14,7 @@ use codexten\yii\modules\auth\models\RegistrationForm;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -24,7 +25,7 @@ use yii\web\NotFoundHttpException;
  * RegistrationController is responsible for all registration process, which includes registration of a new account,
  * resending confirmation tokens, email confirmation and registration via social networks.
  *
- * @property Module $module
+ * @property AuthModule $module
  */
 class RegistrationController extends Controller
 {
@@ -88,8 +89,10 @@ class RegistrationController extends Controller
      *
      * @return string
      * @throws NotFoundHttpException
+     * @throws \Throwable
      * @throws \yii\base\ExitException
      * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
      */
     public function actionRegister()
     {
@@ -107,11 +110,9 @@ class RegistrationController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
+            Yii::$app->getSession()->setFlash('success', \Yii::t('codexten:user', 'Your account has been created'));
 
-            return $this->render('/message', [
-                'title' => \Yii::t('codexten:user', 'Your account has been created'),
-                'module' => $this->module,
-            ]);
+            return $this->redirect(Yii::$app->user->logoutUrl);
         }
 
         return $this->render('register', [

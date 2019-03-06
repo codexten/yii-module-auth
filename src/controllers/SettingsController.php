@@ -27,7 +27,7 @@ use yii\web\NotFoundHttpException;
 /**
  * SettingsController manages updating user settings (e.g. profile, email and password).
  *
- * @property \codexten\yii\modules\auth\Module $module
+ * @property \codexten\yii\modules\auth\AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */
@@ -201,7 +201,7 @@ class SettingsController extends Controller
     {
         $user = $this->finder->findUserById($id);
 
-        if ($user === null || $this->module->emailChangeStrategy == Module::STRATEGY_INSECURE) {
+        if ($user === null || $this->module->emailChangeStrategy == AuthModule::STRATEGY_INSECURE) {
             throw new NotFoundHttpException();
         }
 

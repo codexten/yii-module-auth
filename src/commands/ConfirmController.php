@@ -19,7 +19,7 @@ use yii\helpers\Console;
 /**
  * Confirms a user.
  *
- * @property \codexten\yii\modules\auth\Module $module
+ * @property \codexten\yii\modules\auth\AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */

@@ -124,13 +124,13 @@ class SettingsForm extends Model
                 $this->user->unconfirmed_email = null;
             } elseif ($this->email != $this->user->email) {
                 switch ($this->module->emailChangeStrategy) {
-                    case Module::STRATEGY_INSECURE:
+                    case AuthModule::STRATEGY_INSECURE:
                         $this->insecureEmailChange();
                         break;
-                    case Module::STRATEGY_DEFAULT:
+                    case AuthModule::STRATEGY_DEFAULT:
                         $this->defaultEmailChange();
                         break;
-                    case Module::STRATEGY_SECURE:
+                    case AuthModule::STRATEGY_SECURE:
                         $this->secureEmailChange();
                         break;
                     default:

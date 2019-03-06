@@ -8,7 +8,7 @@
 
 namespace codexten\yii\modules\auth;
 
-class Module extends \codexten\yii\base\Module
+class AuthModule extends \codexten\yii\base\Module
 {
     /** Email is changed right after user enter's new email address. */
     const STRATEGY_INSECURE = 0;

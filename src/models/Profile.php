@@ -33,7 +33,7 @@ use yii\db\ActiveRecord;
 class Profile extends ActiveRecord
 {
     use ModuleTrait;
-    /** @var \codexten\yii\modules\auth\Module */
+    /** @var \codexten\yii\modules\auth\AuthModule */
     protected $module;
 
     /** @inheritdoc */
