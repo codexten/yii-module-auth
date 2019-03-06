@@ -30,4 +30,4 @@ use yii\widgets\ActiveForm;
 
 <?php ActiveForm::end(); ?>
 
-<?= Html::a(Yii::t('codexten:user', 'Already registered? Sign in!'), ['/user/security/login']) ?>
+<?= Html::a(Yii::t('codexten:user', 'Already registered? Sign in!'), ['/auth/account/login']) ?>
