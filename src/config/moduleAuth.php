@@ -18,6 +18,7 @@ return [
         'user' => [
             'identityClass' => \codexten\yii\modules\auth\models\User::class,
             'loginUrl' => ['/auth/account/login'],
+            'registerUrl' => ['/auth/registration/register'],
         ],
         'urlManager' => [
             'rules' => [
