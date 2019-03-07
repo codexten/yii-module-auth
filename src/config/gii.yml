@@ -2,3 +2,5 @@ migration:
   add_access_token_column_to_user_table:
     fields: |
       access_token:'string(40):notNull'
+  rename_token_table_to_user_token:
+    fields: |
