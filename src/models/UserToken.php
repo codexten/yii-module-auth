@@ -11,9 +11,9 @@
 
 namespace codexten\yii\modules\auth\models;
 
+use codexten\yii\db\ActiveRecord;
 use codexten\yii\modules\auth\traits\ModuleTrait;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
@@ -29,7 +29,7 @@ use yii\helpers\Url;
  *
  * @author Jomon Johnson <cto@codexten.com>
  */
-class Token extends ActiveRecord
+class UserToken extends ActiveRecord
 {
     use ModuleTrait;
 
@@ -37,6 +37,7 @@ class Token extends ActiveRecord
     const TYPE_RECOVERY = 1;
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
+    const TYPE_OTP_VERIFICATION = 3;
 
 
     /** @inheritdoc */
@@ -103,7 +104,9 @@ class Token extends ActiveRecord
         return ($this->created_at + $expirationTime) < time();
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
         if ($insert) {

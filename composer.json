@@ -10,6 +10,9 @@
       "codexten\\yii\\modules\\auth\\": "src"
     }
   },
+  "suggest": {
+    "codexten/yii-sms": "for sending SMS"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"
