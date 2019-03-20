@@ -23,7 +23,7 @@ class SiteHelper extends Component implements BootstrapInterface
     {
         $app->on(Application::EVENT_BEFORE_REQUEST, function ($event) use ($app) {
 
-            $user = userIdentity();
+            $user = Yii::$app->user->identity;
             if ($user && !$user->canLogin()) {
 
                 Yii::$app->user->logout();
