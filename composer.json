@@ -18,9 +18,9 @@
       "dev-master": "2.0.x-dev"
     },
     "config-plugin": {
-      "i18n": "src/config/i18n.php",
-      "moduleAuth": "src/config/moduleAuth.php",
-      "migrationNamespaces": "src/config/migrationNamespaces.php"
+      "i18n": "config/i18n.php",
+      "moduleAuth": "config/moduleAuth.php",
+      "migrationNamespaces": "config/migrationNamespaces.php"
     }
   }
 }
