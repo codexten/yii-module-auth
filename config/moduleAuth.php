@@ -6,18 +6,23 @@
  * Time: 3:07 PM
  */
 
+use codexten\yii\modules\auth\AuthModule;
+use codexten\yii\modules\auth\components\SiteHelper;
+use codexten\yii\modules\auth\models\User;
+
 return [
     'aliases' => [
         '@account' => '/user/account',
         '@registration' => '/user/registration',
     ],
     'bootstrap' => [
-        \codexten\yii\modules\auth\components\SiteHelper::class,
+        SiteHelper::class,
     ],
     'components' => [
         'user' => [
-            'identityClass' => \codexten\yii\modules\auth\models\User::class,
+            'identityClass' => User::class,
             'loginUrl' => ['/auth/account/login'],
+            'logoutUrl' => ['/auth/account/logout'],
             'registerUrl' => ['/auth/registration/register'],
         ],
         'urlManager' => [
@@ -31,7 +36,7 @@ return [
     ],
     'modules' => [
         'auth' => [
-            'class' => \codexten\yii\modules\auth\AuthModule::class,
+            'class' => AuthModule::class,
             'controllerNamespace' => 'codexten\yii\modules\auth\controllers',
             'viewPath' => '@codexten/yii/modules/auth/views',
             'layoutPath' => '@app/views/layout',
