@@ -10,11 +10,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="page-auth-account-login">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
 
-    <?= $this->render('@codexten/yii/modules/auth/views/account/login/_form.php', [
-        'model' => $model,
-        'module' => $module,
-    ]) ?>
+            <?= $this->render('@codexten/yii/modules/auth/views/account/login/_form.php', [
+                'model' => $model,
+                'module' => $module,
+            ]) ?>
 
+        </div>
+    </div>
 </div>
 

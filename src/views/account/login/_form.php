@@ -9,8 +9,7 @@ use yii\widgets\ActiveForm;
  * @var codexten\yii\modules\auth\Module $module
  */
 ?>
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
+
 
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
@@ -27,7 +26,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
 
-        <?= Html::submitButton(Yii::t('codexten:user', 'Sign in'),['class'=>'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('codexten:user', 'Sign in'),['class'=>'btn btn-primary']) ?>
 
         <?php ActiveForm::end(); ?>
 
@@ -39,6 +38,3 @@ use yii\widgets\ActiveForm;
             </p>
 
         <?php endif ?>
-
-    </div>
-</div>
