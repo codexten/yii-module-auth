@@ -4,7 +4,8 @@
   "description": "Auth module for yii 2.0 or higher",
   "require": {
     "codexten/yii-user": "^2.0.0",
-    "codexten/yii-web": "^2.0.0"
+    "codexten/yii-web": "^2.0.0",
+    "codexten/yii-user-settings": "^2.0.0"
   },
   "autoload": {
     "psr-4": {
