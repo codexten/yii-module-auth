@@ -8,6 +8,7 @@
 
 use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\components\SiteHelper;
+use codexten\yii\modules\auth\controllers\OtpController;
 use codexten\yii\modules\auth\models\User;
 
 return [
@@ -40,6 +41,11 @@ return [
             'controllerNamespace' => 'codexten\yii\modules\auth\controllers',
             'viewPath' => '@codexten/yii/modules/auth/views',
             'layoutPath' => '@app/views/layout',
+            'controllerMap' => [
+                'otp' => [
+                    'class' => OtpController::class,
+                ],
+            ]
 //            'as globalAccess' => [
 //                'class' => '\codexten\yii\behaviors\GlobalAccessBehavior',
 //                'rules' => [
