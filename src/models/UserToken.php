@@ -33,11 +33,11 @@ class UserToken extends ActiveRecord
 {
     use ModuleTrait;
 
-    const TYPE_CONFIRMATION = 0;
-    const TYPE_RECOVERY = 1;
-    const TYPE_CONFIRM_NEW_EMAIL = 2;
-    const TYPE_CONFIRM_OLD_EMAIL = 3;
-    const TYPE_OTP_VERIFICATION = 3;
+    const TYPE_CONFIRMATION = 1;
+    const TYPE_RECOVERY = 2;
+    const TYPE_CONFIRM_NEW_EMAIL = 3;
+    const TYPE_CONFIRM_OLD_EMAIL = 4;
+    const TYPE_OTP_VERIFICATION = 5;
 
 
     /** @inheritdoc */

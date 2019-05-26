@@ -9,12 +9,12 @@
 namespace codexten\yii\modules\auth\forms;
 
 
-interface OtpVerificationFormInterface
+interface PhoneNumberVerificationFormInterface
 {
     /**
      * @return string
      */
-    public function getMobileNumber(): string;
+    public function getPhoneNumber(): string;
 
     /**
      * @return bool
@@ -24,5 +24,5 @@ interface OtpVerificationFormInterface
     /**
      * @return bool
      */
-    public function sendOtpSms(): bool;
+    public function sendOtp(): bool;
 }

@@ -9,12 +9,12 @@
 namespace codexten\yii\modules\auth\controllers;
 
 
-use codexten\yii\modules\auth\forms\OtpVerificationFormInterface;
+use codexten\yii\modules\auth\forms\PhoneNumberVerificationFormInterface;
 use codexten\yii\web\Controller;
 
-class OtpController extends Controller
+class PhoneNumberVerificationController extends Controller
 {
-    public $modelClass = OtpVerificationFormInterface::class;
+    public $modelClass = PhoneNumberVerificationFormInterface::class;
 
     public function init()
     {
@@ -23,7 +23,7 @@ class OtpController extends Controller
 
     public function actionSend()
     {
-        /* @var $model OtpVerificationFormInterface */
+        /* @var $model PhoneNumberVerificationFormInterface */
         $model = new $this->modelClass();
         $model->sendOtpSms();
     }
