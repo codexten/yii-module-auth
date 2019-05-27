@@ -13,6 +13,8 @@ return [
             'sections' => [
                 'auth' => [
                     'modelClass' => AuthModuleSettings::class,
+                    'label' => 'Auth Module',
+                    'icon' => 'key',
                 ],
             ],
         ],
