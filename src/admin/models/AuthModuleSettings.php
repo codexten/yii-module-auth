@@ -13,5 +13,5 @@ use codexten\yii\settings\models\BaseSettingsModel;
  */
 class AuthModuleSettings extends BaseSettingsModel
 {
-
+    public $enableRegistration;
 }
