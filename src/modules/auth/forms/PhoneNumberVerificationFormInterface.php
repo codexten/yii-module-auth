@@ -8,7 +8,13 @@
 
 namespace codexten\yii\modules\auth\forms;
 
-
+/**
+ * Interface PhoneNumberVerificationFormInterface
+ *
+ * @property $phoneNumber
+ *
+ * @package codexten\yii\modules\auth\forms
+ */
 interface PhoneNumberVerificationFormInterface
 {
     /**
