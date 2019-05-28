@@ -11,6 +11,7 @@
 
 namespace codexten\yii\modules\auth\commands;
 
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\models\User;
 use Yii;
 use yii\console\Controller;
@@ -19,7 +20,7 @@ use yii\helpers\Console;
 /**
  * Creates new user account.
  *
- * @property \codexten\yii\modules\auth\AuthModule $module
+ * @property AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */

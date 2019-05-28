@@ -11,7 +11,13 @@
 
 namespace codexten\yii\modules\auth\models;
 
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use DateTime;
+use DateTimeZone;
+use Exception;
+use Yii;
+use yii\db\ActiveQueryInterface;
 use yii\db\ActiveRecord;
 
 /**
@@ -33,13 +39,13 @@ use yii\db\ActiveRecord;
 class Profile extends ActiveRecord
 {
     use ModuleTrait;
-    /** @var \codexten\yii\modules\auth\AuthModule */
+    /** @var AuthModule */
     protected $module;
 
     /** @inheritdoc */
     public function init()
     {
-        $this->module = \Yii::$app->getModule('user');
+        $this->module = Yii::$app->getModule('user');
     }
 
     /**
@@ -53,7 +59,7 @@ class Profile extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQueryInterface
+     * @return ActiveQueryInterface
      */
     public function getUser()
     {
@@ -85,13 +91,13 @@ class Profile extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name'           => \Yii::t('codexten:user', 'Name'),
-            'public_email'   => \Yii::t('codexten:user', 'Email (public)'),
-            'gravatar_email' => \Yii::t('codexten:user', 'Gravatar email'),
-            'location'       => \Yii::t('codexten:user', 'Location'),
-            'website'        => \Yii::t('codexten:user', 'Website'),
-            'bio'            => \Yii::t('codexten:user', 'Bio'),
-            'timezone'       => \Yii::t('codexten:user', 'Time zone'),
+            'name'           => Yii::t('codexten:user', 'Name'),
+            'public_email'   => Yii::t('codexten:user', 'Email (public)'),
+            'gravatar_email' => Yii::t('codexten:user', 'Gravatar email'),
+            'location'       => Yii::t('codexten:user', 'Location'),
+            'website'        => Yii::t('codexten:user', 'Website'),
+            'bio'            => Yii::t('codexten:user', 'Bio'),
+            'timezone'       => Yii::t('codexten:user', 'Time zone'),
         ];
     }
 
@@ -104,43 +110,43 @@ class Profile extends ActiveRecord
     public function validateTimeZone($attribute, $params)
     {
         if (!in_array($this->$attribute, timezone_identifiers_list())) {
-            $this->addError($attribute, \Yii::t('codexten:user', 'Time zone is not valid'));
+            $this->addError($attribute, Yii::t('codexten:user', 'Time zone is not valid'));
         }
     }
 
     /**
      * Get the user's time zone.
      * Defaults to the application timezone if not specified by the user.
-     * @return \DateTimeZone
+     * @return DateTimeZone
      */
     public function getTimeZone()
     {
         try {
-            return new \DateTimeZone($this->timezone);
-        } catch (\Exception $e) {
+            return new DateTimeZone($this->timezone);
+        } catch (Exception $e) {
             // Default to application time zone if the user hasn't set their time zone
-            return new \DateTimeZone(\Yii::$app->timeZone);
+            return new DateTimeZone(Yii::$app->timeZone);
         }
     }
 
     /**
      * Set the user's time zone.
-     * @param \DateTimeZone $timezone the timezone to save to the user's profile
+     * @param DateTimeZone $timezone the timezone to save to the user's profile
      */
-    public function setTimeZone(\DateTimeZone $timeZone)
+    public function setTimeZone(DateTimeZone $timeZone)
     {
         $this->setAttribute('timezone', $timeZone->getName());
     }
 
     /**
      * Converts DateTime to user's local time
-     * @param \DateTime the datetime to convert
-     * @return \DateTime
+     * @param DateTime the datetime to convert
+     * @return DateTime
      */
-    public function toLocalTime(\DateTime $dateTime = null)
+    public function toLocalTime(DateTime $dateTime = null)
     {
         if ($dateTime === null) {
-            $dateTime = new \DateTime();
+            $dateTime = new DateTime();
         }
 
         return $dateTime->setTimezone($this->getTimeZone());

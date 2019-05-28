@@ -3,6 +3,7 @@
 namespace codexten\yii\modules\auth\traits;
 
 use codexten\yii\modules\auth\Module;
+use Yii;
 
 /**
  * Trait ModuleTrait
@@ -18,6 +19,6 @@ trait ModuleTrait
      */
     public function getModule()
     {
-        return \Yii::$app->getModule('auth');
+        return Yii::$app->getModule('auth');
     }
 }

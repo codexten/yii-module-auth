@@ -9,11 +9,13 @@
  * file that was distributed with this source code.
  */
 
+use codexten\yii\modules\auth\models\Profile;
 use yii\helpers\Html;
+use yii\web\View;
 
 /**
- * @var \yii\web\View $this
- * @var \codexten\yii\modules\auth\models\Profile $profile
+ * @var View $this
+ * @var Profile $profile
  */
 
 $this->title = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);

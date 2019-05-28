@@ -6,8 +6,10 @@ namespace codexten\yii\modules\auth\forms;
 
 use cheatsheet\Time;
 use codexten\matrimony\MatrimonyHelper;
+use codexten\yii\modules\auth\helpers\UserTokenHelper;
 use codexten\yii\modules\auth\models\UserToken;
 use codexten\yii\sms\Sms;
+use Yii;
 
 /**
  * Trait OtpVerificationFormTrait
@@ -19,7 +21,7 @@ use codexten\yii\sms\Sms;
  */
 trait OtpVerificationFormTrait
 {
-    public $otp;
+    private $_otp;
     /**
      * @var Sms
      */
@@ -28,7 +30,7 @@ trait OtpVerificationFormTrait
     public function sendOtpSms(): bool
     {
         $model = new UserToken([
-            'user_id' => \Yii::$app->user->identity->getId(),
+            'user_id' => Yii::$app->user->identity->getId(),
             'type' => UserToken::TYPE_OTP_VERIFICATION,
         ]);
 
@@ -47,13 +49,17 @@ trait OtpVerificationFormTrait
     /**
      * send phone-number-verification sms  to mobile number
      *
+     * @param bool $force
+     *
      * @return bool
      */
     public function sendOtp($force = false): bool
     {
-        $appName = \Yii::$app->name;
+        $appName = Yii::$app->name;
+        $this->generateOtp();
+        $otp = $this->otp;
 
-        return \Yii::$app->sms->send("Your {$appName} verification code is 445566", $this->phoneNumber);
+//        return \Yii::$app->sms->send("Your {$appName} verification code is 445566", $this->phoneNumber);
 
 //        $this->phoneNumber
 
@@ -71,6 +77,20 @@ trait OtpVerificationFormTrait
 //            ]);
 //        }
 
-//        return false;
+        return false;
+    }
+
+    public function getOtp()
+    {
+        return $this->_otp;
+    }
+
+    /**
+     * @return string
+     */
+    public function generateOtp()
+    {
+        $userToken = UserTokenHelper::generatePhoneNumberVerificationToken();
+        $this->_otp = $userToken->code;
     }
 }

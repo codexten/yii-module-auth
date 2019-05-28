@@ -13,6 +13,7 @@ namespace codexten\yii\modules\auth\models;
 
 use codexten\yii\modules\auth\Finder;
 use codexten\yii\modules\auth\Mailer;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -63,8 +64,8 @@ class RecoveryForm extends Model
     public function attributeLabels()
     {
         return [
-            'email'    => \Yii::t('codexten:user', 'Email'),
-            'password' => \Yii::t('codexten:user', 'Password'),
+            'email'    => Yii::t('codexten:user', 'Email'),
+            'password' => Yii::t('codexten:user', 'Password'),
         ];
     }
 
@@ -108,7 +109,7 @@ class RecoveryForm extends Model
 
         if ($user instanceof User) {
             /** @var Token $token */
-            $token = \Yii::createObject([
+            $token = Yii::createObject([
                 'class' => Token::className(),
                 'user_id' => $user->id,
                 'type' => Token::TYPE_RECOVERY,
@@ -123,9 +124,9 @@ class RecoveryForm extends Model
             }
         }
 
-        \Yii::$app->session->setFlash(
+        Yii::$app->session->setFlash(
             'info',
-            \Yii::t('codexten:user', 'An email has been sent with instructions for resetting your password')
+            Yii::t('codexten:user', 'An email has been sent with instructions for resetting your password')
         );
 
         return true;
@@ -145,12 +146,12 @@ class RecoveryForm extends Model
         }
 
         if ($token->user->resetPassword($this->password)) {
-            \Yii::$app->session->setFlash('success', \Yii::t('codexten:user', 'Your password has been changed successfully.'));
+            Yii::$app->session->setFlash('success', Yii::t('codexten:user', 'Your password has been changed successfully.'));
             $token->delete();
         } else {
-            \Yii::$app->session->setFlash(
+            Yii::$app->session->setFlash(
                 'danger',
-                \Yii::t('codexten:user', 'An error occurred and your password has not been changed. Please try again later.')
+                Yii::t('codexten:user', 'An error occurred and your password has not been changed. Please try again later.')
             );
         }
 

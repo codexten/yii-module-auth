@@ -15,7 +15,9 @@ use codexten\yii\modules\auth\helpers\Password;
 use codexten\yii\modules\auth\Mailer;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use OutOfBoundsException;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 
 /**
@@ -134,7 +136,7 @@ class SettingsForm extends Model
                         $this->secureEmailChange();
                         break;
                     default:
-                        throw new \OutOfBoundsException('Invalid email changing strategy');
+                        throw new OutOfBoundsException('Invalid email changing strategy');
                 }
             }
 
@@ -176,7 +178,7 @@ class SettingsForm extends Model
     /**
      * Sends a confirmation message to both old and new email addresses with link to confirm changing of email.
      *
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     protected function secureEmailChange()
     {

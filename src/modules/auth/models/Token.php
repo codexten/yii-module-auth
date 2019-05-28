@@ -12,7 +12,9 @@
 namespace codexten\yii\modules\auth\models;
 
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use RuntimeException;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
@@ -39,7 +41,7 @@ class Token extends ActiveRecord
     const TYPE_CONFIRM_OLD_EMAIL = 3;
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -63,7 +65,7 @@ class Token extends ActiveRecord
                 $route = '/user/settings/confirm';
                 break;
             default:
-                throw new \RuntimeException();
+                throw new RuntimeException();
         }
 
         return Url::to([$route, 'id' => $this->user_id, 'code' => $this->code], true);
@@ -84,7 +86,7 @@ class Token extends ActiveRecord
                 $expirationTime = $this->module->recoverWithin;
                 break;
             default:
-                throw new \RuntimeException();
+                throw new RuntimeException();
         }
 
         return ($this->created_at + $expirationTime) < time();

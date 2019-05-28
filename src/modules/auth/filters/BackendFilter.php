@@ -11,6 +11,7 @@
 
 namespace codexten\yii\modules\auth\filters;
 
+use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\base\ActionFilter;
 
@@ -28,10 +29,10 @@ class BackendFilter extends ActionFilter
     public $controllers = ['profile', 'recovery', 'registration', 'settings'];
 
     /**
-     * @param \yii\base\Action $action
+     * @param Action $action
      *
      * @return bool
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function beforeAction($action)
     {

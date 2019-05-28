@@ -11,15 +11,17 @@
 
 namespace codexten\yii\modules\auth\commands;
 
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\Finder;
 use Yii;
+use yii\base\Module;
 use yii\console\Controller;
 use yii\helpers\Console;
 
 /**
  * Updates user's password.
  *
- * @property \codexten\yii\modules\auth\AuthModule $module
+ * @property AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */
@@ -30,7 +32,7 @@ class PasswordController extends Controller
 
     /**
      * @param string           $id
-     * @param \yii\base\Module $module
+     * @param Module $module
      * @param Finder           $finder
      * @param array            $config
      */

@@ -2,17 +2,20 @@
 
 namespace codexten\yii\modules\auth\migrations;
 
+use codexten\yii\rbac\Migration;
+use yii\base\Exception;
+
 /**
  * Class m150625_214101_roles
  *
  * @package eii\migrations\rbac
  * @author Jomon Johnson <cto@codexten.com>
  */
-class m172625_214101_role extends \codexten\yii\rbac\Migration
+class m172625_214101_role extends Migration
 {
     /**
      * @return bool|void
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function up()
     {

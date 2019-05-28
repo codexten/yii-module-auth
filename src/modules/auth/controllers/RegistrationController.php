@@ -14,7 +14,11 @@ use codexten\yii\modules\auth\models\RegistrationForm;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
+use Throwable;
 use Yii;
+use yii\base\ExitException;
+use yii\base\InvalidConfigException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -89,10 +93,10 @@ class RegistrationController extends Controller
      *
      * @return string
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\base\ExitException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
+     * @throws Throwable
+     * @throws ExitException
+     * @throws InvalidConfigException
+     * @throws Exception
      */
     public function actionRegister()
     {
@@ -101,16 +105,16 @@ class RegistrationController extends Controller
         }
 
         /** @var RegistrationForm $model */
-        $model = \Yii::createObject(RegistrationForm::class);
+        $model = Yii::createObject(RegistrationForm::class);
         $event = $this->getFormEvent($model);
 
         $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
 
         $this->performAjaxValidation($model);
 
-        if ($model->load(\Yii::$app->request->post()) && $model->register()) {
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
-            Yii::$app->getSession()->setFlash('success', \Yii::t('codexten:user', 'Your account has been created'));
+            Yii::$app->getSession()->setFlash('success', Yii::t('codexten:user', 'Your account has been created'));
 
             return $this->redirect(Yii::$app->user->logoutUrl);
         }

@@ -3,6 +3,7 @@
 namespace codexten\yii\modules\auth\migrations;
 
 use Yii;
+use yii\base\Exception;
 use yii\db\Migration;
 
 /**
@@ -14,7 +15,7 @@ class m181108065336_seed_admin_user extends Migration
 {
     /**
      * @return bool|void
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function safeUp()
     {

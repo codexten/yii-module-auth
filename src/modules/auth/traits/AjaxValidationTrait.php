@@ -11,6 +11,8 @@
 
 namespace codexten\yii\modules\auth\traits;
 
+use Yii;
+use yii\base\ExitException;
 use yii\base\Model;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
@@ -25,15 +27,15 @@ trait AjaxValidationTrait
      *
      * @param Model $model
      *
-     * @throws \yii\base\ExitException
+     * @throws ExitException
      */
     protected function performAjaxValidation(Model $model)
     {
-        if (\Yii::$app->request->isAjax && $model->load(\Yii::$app->request->post())) {
-            \Yii::$app->response->format = Response::FORMAT_JSON;
-            \Yii::$app->response->data   = ActiveForm::validate($model);
-            \Yii::$app->response->send();
-            \Yii::$app->end();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            Yii::$app->response->data   = ActiveForm::validate($model);
+            Yii::$app->response->send();
+            Yii::$app->end();
         }
     }
 }

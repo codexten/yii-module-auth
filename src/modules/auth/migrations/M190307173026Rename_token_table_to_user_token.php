@@ -14,7 +14,7 @@ class M190307173026Rename_token_table_to_user_token extends Migration
      */
     public function safeUp()
     {
-        $this->renameTable('{{%token}}','{{%user_token}}');
+        $this->renameTable('{{%token}}', '{{%user_token}}');
 
     }
 
@@ -23,8 +23,7 @@ class M190307173026Rename_token_table_to_user_token extends Migration
      */
     public function safeDown()
     {
-        $this->renameTable('{{%user_token}}','{{%token}}');
-
+        $this->renameTable('{{%user_token}}', '{{%token}}');
     }
 
 }

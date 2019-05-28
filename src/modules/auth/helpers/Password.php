@@ -3,6 +3,7 @@
 namespace codexten\yii\modules\auth\helpers;
 
 use Yii;
+use yii\base\Exception;
 
 /**
  * Password helper.
@@ -17,7 +18,7 @@ class Password
      * @param $password
      *
      * @return string
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public static function hash($password)
     {

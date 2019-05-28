@@ -11,6 +11,10 @@
 
 namespace codexten\yii\modules\auth\helpers;
 
+use DateTime;
+use DateTimeZone;
+use yii\helpers\ArrayHelper;
+
 /**
  * Timezone helper.
  *
@@ -27,10 +31,10 @@ class Timezone
     public static function getAll()
     {
         $timeZones = [];
-        $timeZoneIdentifiers = \DateTimeZone::listIdentifiers();
+        $timeZoneIdentifiers = DateTimeZone::listIdentifiers();
 
         foreach ($timeZoneIdentifiers as $timeZone) {
-            $date = new \DateTime('now', new \DateTimeZone($timeZone));
+            $date = new DateTime('now', new DateTimeZone($timeZone));
             $offset = $date->getOffset();
             $tz = ($offset > 0 ? '+' : '-') . gmdate('H:i', abs($offset));
             $timeZones[] = [
@@ -40,7 +44,7 @@ class Timezone
             ];
         }
 
-        \yii\helpers\ArrayHelper::multisort($timeZones, 'offset', SORT_DESC, SORT_NUMERIC);
+        ArrayHelper::multisort($timeZones, 'offset', SORT_DESC, SORT_NUMERIC);
 
         return $timeZones;
     }

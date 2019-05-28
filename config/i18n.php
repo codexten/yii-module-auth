@@ -6,10 +6,12 @@
  * Time: 2:22 PM
  */
 
+use yii\i18n\PhpMessageSource;
+
 return [
     'translations' => [
         'codexten:user' => [
-            'class' => \yii\i18n\PhpMessageSource::class,
+            'class' => PhpMessageSource::class,
             'basePath' => '@codexten/yii/modules/auth/messages',
         ],
     ],

@@ -11,6 +11,7 @@
 
 namespace codexten\yii\modules\auth\controllers;
 
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\Finder;
 use codexten\yii\modules\auth\models\ResetPasswordForm;
 use Yii;
@@ -19,11 +20,12 @@ use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * ProfileController shows users profiles.
  *
- * @property \codexten\yii\modules\auth\AuthModule $module
+ * @property AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */
@@ -49,11 +51,11 @@ class ProfileController extends Controller
     /**
      * Redirects to current user's profile.
      *
-     * @return \yii\web\Response
+     * @return Response
      */
     public function actionIndex()
     {
-        return $this->redirect(['show', 'id' => \Yii::$app->user->getId()]);
+        return $this->redirect(['show', 'id' => Yii::$app->user->getId()]);
     }
 
     /**
@@ -61,8 +63,8 @@ class ProfileController extends Controller
      *
      * @param int $id
      *
-     * @return \yii\web\Response
-     * @throws \yii\web\NotFoundHttpException
+     * @return Response
+     * @throws NotFoundHttpException
      */
     public function actionShow($id)
     {

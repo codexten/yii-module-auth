@@ -4,6 +4,8 @@ namespace codexten\yii\modules\auth\models;
 
 use codexten\yii\modules\auth\helpers\Password;
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use Yii;
+use yii\base\Exception;
 use yii\web\IdentityInterface;
 
 /**
@@ -118,7 +120,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
             'usernameUnique' => [
                 'username',
                 'unique',
-                'message' => \Yii::t('codexten:user', 'This username has already been taken'),
+                'message' => Yii::t('codexten:user', 'This username has already been taken'),
             ],
 
             // email rules
@@ -129,7 +131,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
             'emailUnique' => [
                 'email',
                 'unique',
-                'message' => \Yii::t('codexten:user', 'This email address has already been taken'),
+                'message' => Yii::t('codexten:user', 'This email address has already been taken'),
             ],
 
             // password rules
@@ -152,22 +154,22 @@ class User extends \codexten\yii\models\User implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username' => \Yii::t('codexten:user', 'Username'),
-            'email' => \Yii::t('codexten:user', 'Email'),
-            'password' => \Yii::t('codexten:user', 'Password'),
-            'created_at' => \Yii::t('codexten:user', 'Registration time'),
-            'logged_at' => \Yii::t('codexten:user', 'Last login'),
+            'username' => Yii::t('codexten:user', 'Username'),
+            'email' => Yii::t('codexten:user', 'Email'),
+            'password' => Yii::t('codexten:user', 'Password'),
+            'created_at' => Yii::t('codexten:user', 'Registration time'),
+            'logged_at' => Yii::t('codexten:user', 'Last login'),
         ];
     }
 
     /**
      * {@inheritdoc}
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
+            $this->setAttribute('auth_key', Yii::$app->security->generateRandomString());
 //            if (\Yii::$app instanceof WebApplication) {
 //                $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
 //            }

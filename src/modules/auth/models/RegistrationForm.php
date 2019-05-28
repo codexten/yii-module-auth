@@ -9,6 +9,7 @@
 namespace codexten\yii\modules\auth\models;
 
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use Throwable;
 use Yii;
 use yii\base\Model;
 use yii\db\Exception;
@@ -136,8 +137,8 @@ class RegistrationForm extends Model
      * Registers a new user account.
      *
      * @return bool
-     * @throws \Throwable
-     * @throws \yii\db\Exception
+     * @throws Throwable
+     * @throws Exception
      */
     public function register()
     {
@@ -163,7 +164,7 @@ class RegistrationForm extends Model
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $transaction->rollBack();
             throw $e;
         }

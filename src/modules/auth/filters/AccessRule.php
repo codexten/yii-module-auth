@@ -11,8 +11,11 @@
 
 namespace codexten\yii\modules\auth\filters;
 
+use Yii;
+
 /**
  * Access rule class for simpler RBAC.
+ *
  * @see http://yii2-user.dmeroff.ru/docs/custom-access-control
  * @author Jomon Johnson <cto@codexten.com>
  */
@@ -29,15 +32,15 @@ class AccessRule extends \yii\filters\AccessRule
 
         foreach ($this->roles as $role) {
             if ($role === '?') {
-                if (\Yii::$app->user->isGuest) {
+                if (Yii::$app->user->isGuest) {
                     return true;
                 }
             } elseif ($role === '@') {
-                if (!\Yii::$app->user->isGuest) {
+                if (!Yii::$app->user->isGuest) {
                     return true;
                 }
             } elseif ($role === 'admin') {
-                if (!\Yii::$app->user->isGuest && \Yii::$app->user->identity->isAdmin) {
+                if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
                     return true;
                 }
             } elseif ($user->can($role)) {

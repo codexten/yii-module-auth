@@ -4,3 +4,5 @@ migration:
       access_token:'string(40):notNull'
   rename_token_table_to_user_token:
     fields: |
+  alter_user_token_table:
+    fields: |

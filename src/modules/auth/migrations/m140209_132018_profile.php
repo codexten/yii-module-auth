@@ -2,13 +2,15 @@
 
 namespace codexten\yii\modules\auth\migrations;
 
+use yii\db\Migration;
+
 /**
  * Class m140209_132017_init
  *
  * @package codexten\yii\modules\auth\migrations
  * @author Jomon Johnson <cto@codexten.com>
  */
-class m140209_132018_profile extends \yii\db\Migration
+class m140209_132018_profile extends Migration
 {
     public function up()
     {

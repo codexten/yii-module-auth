@@ -9,13 +9,15 @@
 
 /**
  * @var yii\web\View $this
- * @var \codexten\yii\web\User $model
- * @var \codexten\yii\modules\auth\AuthModule $module
+ * @var User $model
+ * @var AuthModule $module
  */
 
 $this->title = Yii::t('codexten:user', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
-?>
+
+use codexten\yii\modules\auth\AuthModule;
+use codexten\yii\web\User; ?>
 <div class="page-auth-account-login">
 
     <?= $this->render('@codexten/yii/modules/auth/views/registration/register/_form.php', [

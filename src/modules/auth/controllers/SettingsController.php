@@ -11,6 +11,7 @@
 
 namespace codexten\yii\modules\auth\controllers;
 
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\Finder;
 use codexten\yii\modules\auth\models\Profile;
 use codexten\yii\modules\auth\models\SettingsForm;
@@ -18,16 +19,20 @@ use codexten\yii\modules\auth\models\User;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
+use Exception;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * SettingsController manages updating user settings (e.g. profile, email and password).
  *
- * @property \codexten\yii\modules\auth\AuthModule $module
+ * @property AuthModule $module
  *
  * @author Jomon Johnson <cto@codexten.com>
  */
@@ -134,15 +139,15 @@ class SettingsController extends Controller
     /**
      * Shows profile settings form.
      *
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionProfile()
     {
-        $model = Profile::findOne(['user_id' => \Yii::$app->user->identity->getId()]);
+        $model = Profile::findOne(['user_id' => Yii::$app->user->identity->getId()]);
         
         if ($model == null) {
-            $model = \Yii::createObject(Profile::className());
-            $model->link('user', \Yii::$app->user->identity);
+            $model = Yii::createObject(Profile::className());
+            $model->link('user', Yii::$app->user->identity);
         }
 
         $event = $this->getProfileEvent($model);
@@ -150,8 +155,8 @@ class SettingsController extends Controller
         $this->performAjaxValidation($model);
 
         $this->trigger(self::EVENT_BEFORE_PROFILE_UPDATE, $event);
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->getSession()->setFlash('success', \Yii::t('codexten:user', 'Your profile has been updated'));
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('codexten:user', 'Your profile has been updated'));
             $this->trigger(self::EVENT_AFTER_PROFILE_UPDATE, $event);
 
             return $this->refresh();
@@ -165,19 +170,19 @@ class SettingsController extends Controller
     /**
      * Displays page where user can update account settings (username, email or password).
      *
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionAccount()
     {
         /** @var SettingsForm $model */
-        $model = \Yii::createObject(SettingsForm::className());
+        $model = Yii::createObject(SettingsForm::className());
         $event = $this->getFormEvent($model);
 
         $this->performAjaxValidation($model);
 
         $this->trigger(self::EVENT_BEFORE_ACCOUNT_UPDATE, $event);
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success', \Yii::t('codexten:user', 'Your account details have been updated'));
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('codexten:user', 'Your account details have been updated'));
             $this->trigger(self::EVENT_AFTER_ACCOUNT_UPDATE, $event);
 
             return $this->refresh();
@@ -195,7 +200,7 @@ class SettingsController extends Controller
      * @param string $code
      *
      * @return string
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
     public function actionConfirm($id, $code)
     {
@@ -222,7 +227,7 @@ class SettingsController extends Controller
     public function actionNetworks()
     {
         return $this->render('networks', [
-            'user' => \Yii::$app->user->identity,
+            'user' => Yii::$app->user->identity,
         ]);
     }
 
@@ -231,9 +236,9 @@ class SettingsController extends Controller
      *
      * @param int $id
      *
-     * @return \yii\web\Response
-     * @throws \yii\web\NotFoundHttpException
-     * @throws \yii\web\ForbiddenHttpException
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws ForbiddenHttpException
      */
     public function actionDisconnect($id)
     {
@@ -242,7 +247,7 @@ class SettingsController extends Controller
         if ($account === null) {
             throw new NotFoundHttpException();
         }
-        if ($account->user_id != \Yii::$app->user->id) {
+        if ($account->user_id != Yii::$app->user->id) {
             throw new ForbiddenHttpException();
         }
 
@@ -258,26 +263,26 @@ class SettingsController extends Controller
     /**
      * Completely deletes user's account.
      *
-     * @return \yii\web\Response
-     * @throws \Exception
+     * @return Response
+     * @throws Exception
      */
     public function actionDelete()
     {
         if (!$this->module->enableAccountDelete) {
-            throw new NotFoundHttpException(\Yii::t('codexten:user', 'Not found'));
+            throw new NotFoundHttpException(Yii::t('codexten:user', 'Not found'));
         }
 
         /** @var User $user */
-        $user = \Yii::$app->user->identity;
+        $user = Yii::$app->user->identity;
         $event = $this->getUserEvent($user);
 
-        \Yii::$app->user->logout();
+        Yii::$app->user->logout();
 
         $this->trigger(self::EVENT_BEFORE_DELETE, $event);
         $user->delete();
         $this->trigger(self::EVENT_AFTER_DELETE, $event);
 
-        \Yii::$app->session->setFlash('info', \Yii::t('codexten:user', 'Your account has been completely deleted'));
+        Yii::$app->session->setFlash('info', Yii::t('codexten:user', 'Your account has been completely deleted'));
 
         return $this->goHome();
     }

@@ -6,7 +6,9 @@ use codexten\yii\modules\auth\clients\ClientInterface;
 use codexten\yii\modules\auth\Finder;
 use codexten\yii\modules\auth\models\query\AccountQuery;
 use codexten\yii\modules\auth\traits\ModuleTrait;
+use Yii;
 use yii\authclient\ClientInterface as BaseClientInterface;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -78,7 +80,7 @@ class Account extends ActiveRecord
      */
     public function getConnectUrl()
     {
-        $code = \Yii::$app->security->generateRandomString();
+        $code = Yii::$app->security->generateRandomString();
         $this->updateAttributes(['code' => md5($code)]);
 
         return Url::to(['/user/registration/connect', 'code' => $code]);
@@ -99,13 +101,13 @@ class Account extends ActiveRecord
      */
     public static function find()
     {
-        return \Yii::createObject(AccountQuery::className(), [get_called_class()]);
+        return Yii::createObject(AccountQuery::className(), [get_called_class()]);
     }
 
     public static function create(BaseClientInterface $client)
     {
         /** @var Account $account */
-        $account = \Yii::createObject([
+        $account = Yii::createObject([
             'class' => static::className(),
             'provider' => $client->getId(),
             'client_id' => $client->getUserAttributes()['id'],
@@ -135,8 +137,8 @@ class Account extends ActiveRecord
      */
     public static function connectWithUser(BaseClientInterface $client)
     {
-        if (\Yii::$app->user->isGuest) {
-            \Yii::$app->session->setFlash('danger', \Yii::t('codexten:user', 'Something went wrong'));
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('danger', Yii::t('codexten:user', 'Something went wrong'));
 
             return;
         }
@@ -144,12 +146,12 @@ class Account extends ActiveRecord
         $account = static::fetchAccount($client);
 
         if ($account->user === null) {
-            $account->link('user', \Yii::$app->user->identity);
-            \Yii::$app->session->setFlash('success', \Yii::t('codexten:user', 'Your account has been connected'));
+            $account->link('user', Yii::$app->user->identity);
+            Yii::$app->session->setFlash('success', Yii::t('codexten:user', 'Your account has been connected'));
         } else {
-            \Yii::$app->session->setFlash(
+            Yii::$app->session->setFlash(
                 'danger',
-                \Yii::t('codexten:user', 'This account has already been connected to another user')
+                Yii::t('codexten:user', 'This account has already been connected to another user')
             );
         }
     }
@@ -160,14 +162,14 @@ class Account extends ActiveRecord
      * @param BaseClientInterface $client
      *
      * @return Account
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     protected static function fetchAccount(BaseClientInterface $client)
     {
         $account = static::getFinder()->findAccount()->byClient($client)->one();
 
         if (null === $account) {
-            $account = \Yii::createObject([
+            $account = Yii::createObject([
                 'class' => static::className(),
                 'provider' => $client->getId(),
                 'client_id' => $client->getUserAttributes()['id'],
@@ -194,7 +196,7 @@ class Account extends ActiveRecord
             return $user;
         }
 
-        $user = \Yii::createObject([
+        $user = Yii::createObject([
             'class' => User::className(),
             'scenario' => 'connect',
             'username' => $account->username,
@@ -218,7 +220,7 @@ class Account extends ActiveRecord
     protected static function getFinder()
     {
         if (static::$finder === null) {
-            static::$finder = \Yii::$container->get(Finder::className());
+            static::$finder = Yii::$container->get(Finder::className());
         }
 
         return static::$finder;

@@ -24,7 +24,7 @@ class LoginForm extends Model
     /** @var string Whether to remember the user */
     public $rememberMe = false;
 
-    /** @var \codexten\yii\modules\auth\models\User */
+    /** @var User */
     protected $user;
 
     /**

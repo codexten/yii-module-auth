@@ -12,6 +12,7 @@
 namespace codexten\yii\modules\auth\widgets;
 
 use codexten\yii\modules\auth\models\LoginForm;
+use Yii;
 use yii\base\Widget;
 
 /**
@@ -32,7 +33,7 @@ class Login extends Widget
     public function run()
     {
         return $this->render('login', [
-            'model' => \Yii::createObject(LoginForm::className()),
+            'model' => Yii::createObject(LoginForm::className()),
         ]);
     }
 }

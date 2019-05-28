@@ -1,5 +1,6 @@
 <?php
 
+use codexten\yii\components\Settings;
 use codexten\yii\modules\auth\admin\AuthModuleSettings;
 
 /**
@@ -7,7 +8,7 @@ use codexten\yii\modules\auth\admin\AuthModuleSettings;
  *
  * Class AdminSettings
  */
-class AdminSettings extends \codexten\yii\components\Settings
+class AdminSettings extends Settings
 {
 
 }

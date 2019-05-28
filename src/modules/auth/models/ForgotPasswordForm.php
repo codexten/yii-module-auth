@@ -48,8 +48,8 @@ class ForgotPasswordForm extends Model
     public function sendPassword()
     {
         $model = $this->getUser();
-        $password = \Yii::$app->security->generateRandomString(8);
-        $model->password_hash = \Yii::$app->security->generatePasswordHash($password);
+        $password = Yii::$app->security->generateRandomString(8);
+        $model->password_hash = Yii::$app->security->generatePasswordHash($password);
         $model->save(false, ['password_hash']);
 
         return Yii::$app->mailer->compose()

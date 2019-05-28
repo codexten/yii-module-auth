@@ -13,6 +13,8 @@ use codexten\yii\modules\auth\traits\EventTrait;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
+use yii\base\ExitException;
+use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
@@ -103,24 +105,24 @@ class AccountController extends Controller
      * Displays the login page.
      *
      * @return string|Response
-     * @throws \yii\base\ExitException
-     * @throws \yii\base\InvalidConfigException
+     * @throws ExitException
+     * @throws InvalidConfigException
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             $this->goHome();
         }
 
         /** @var LoginForm $model */
-        $model = \Yii::createObject(LoginForm::class);
+        $model = Yii::createObject(LoginForm::class);
         $event = $this->getFormEvent($model);
 
         $this->performAjaxValidation($model);
 
         $this->trigger(self::EVENT_BEFORE_LOGIN, $event);
 
-        if ($model->load(\Yii::$app->getRequest()->post()) && $model->login()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
             $this->trigger(self::EVENT_AFTER_LOGIN, $event);
 
             return $this->goBack();
@@ -138,15 +140,15 @@ class AccountController extends Controller
      * Logs the user out and then redirects to the homepage.
      *
      * @return Response
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function actionLogout()
     {
-        $event = $this->getUserEvent(\Yii::$app->user->identity);
+        $event = $this->getUserEvent(Yii::$app->user->identity);
 
         $this->trigger(self::EVENT_BEFORE_LOGOUT, $event);
 
-        \Yii::$app->getUser()->logout();
+        Yii::$app->getUser()->logout();
 
         $this->trigger(self::EVENT_AFTER_LOGOUT, $event);
 
