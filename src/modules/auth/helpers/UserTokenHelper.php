@@ -72,17 +72,22 @@ class UserTokenHelper
 
     /**
      * @param string $code
-     * @param int $type
+     * @param string $type
      * @param int|null $userId
      *
      * @return UserToken|null
      */
-    public function getUserTokenByCode(string $code, int $type, int $userId = null): ?UserToken
+    public static function getUserTokenByCode(string $code, string $type, int $userId = null): ?UserToken
     {
         if ($userId === null) {
             $userId = UserHelper::getMyId();
         }
 
         return UserToken::findOne(['code' => $code, 'type' => $type, 'user_id' => $userId]);
+    }
+
+    public static function getPhoneNumberVerificationTokenByCode(string $code, int $userId = null): ?UserToken
+    {
+        return self::getUserTokenByCode($code, self::TYPE_PHONE_NUMBER_VERIFICATION, $userId);
     }
 }

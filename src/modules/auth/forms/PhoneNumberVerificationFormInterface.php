@@ -8,6 +8,8 @@
 
 namespace codexten\yii\modules\auth\forms;
 
+use yii\db\ActiveRecordInterface;
+
 /**
  * Interface PhoneNumberVerificationFormInterface
  *

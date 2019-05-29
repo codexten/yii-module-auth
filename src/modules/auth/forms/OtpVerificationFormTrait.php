@@ -9,6 +9,7 @@ use codexten\matrimony\MatrimonyHelper;
 use codexten\yii\modules\auth\helpers\UserTokenHelper;
 use codexten\yii\modules\auth\models\UserToken;
 use codexten\yii\sms\Sms;
+use phpDocumentor\Reflection\Types\Static_;
 use Yii;
 
 /**
@@ -21,45 +22,63 @@ use Yii;
  */
 trait OtpVerificationFormTrait
 {
-    private $_otp;
+    public $otp;
     /**
      * @var Sms
      */
     public $sms;
 
-    public function sendOtpSms(): bool
+    /**
+     * @inheritDoc
+     */
+    public function rules()
     {
-        $model = new UserToken([
-            'user_id' => Yii::$app->user->identity->getId(),
-            'type' => UserToken::TYPE_OTP_VERIFICATION,
-        ]);
-
-        return $model->code;
+        return [
+            [['otp'], 'required',],
+            [['otp'], 'validateOtp',],
+        ];
     }
 
+//    /**
+//     * @inheritdoc
+//     */
+//    public function init()
+//    {
+//        parent::init();
+//        $this->sendOtp();
+//    }
+
     /**
-     * @inheritdoc
+     * @param string $attribute
+     * @param self $model
+     *
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function init()
+    public function validateOtp($attribute)
     {
-        parent::init();
-        $this->sendOtp();
+        $userToken = UserTokenHelper::getPhoneNumberVerificationTokenByCode($this->otp);
+
+        if ($userToken === null) {
+            $this->addError($attribute, 'Invalid OTP');
+        } else {
+            $userToken->delete();
+        }
     }
 
     /**
      * send phone-number-verification sms  to mobile number
      *
-     * @param bool $force
-     *
      * @return bool
      */
-    public function sendOtp($force = false): bool
+    public function sendOtp(): bool
     {
         $appName = Yii::$app->name;
-        $this->generateOtp();
-        $otp = $this->otp;
+        $otp = $this->generateOtp();
 
-//        return \Yii::$app->sms->send("Your {$appName} verification code is 445566", $this->phoneNumber);
+//        $otp = $this->otp;
+
+//        return \Yii::$app->sms->send("Your {$appName} verification code is {$otp}", $this->phoneNumber);
 
 //        $this->phoneNumber
 
@@ -80,17 +99,13 @@ trait OtpVerificationFormTrait
         return false;
     }
 
-    public function getOtp()
-    {
-        return $this->_otp;
-    }
-
     /**
      * @return string
      */
     public function generateOtp()
     {
         $userToken = UserTokenHelper::generatePhoneNumberVerificationToken();
-        $this->_otp = $userToken->code;
+
+        return $userToken->code;
     }
 }

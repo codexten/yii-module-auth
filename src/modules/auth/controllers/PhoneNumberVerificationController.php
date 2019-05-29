@@ -11,6 +11,7 @@ namespace codexten\yii\modules\auth\controllers;
 
 use codexten\yii\modules\auth\forms\PhoneNumberVerificationFormInterface;
 use codexten\yii\web\Controller;
+use yii\base\Model;
 
 class PhoneNumberVerificationController extends Controller
 {
@@ -20,16 +21,22 @@ class PhoneNumberVerificationController extends Controller
     public $modelClass;
 
 
-    public function actionIndex($resend = false)
+    public function actionIndex($resent = false)
     {
-        /* @var $model PhoneNumberVerificationFormInterface */
+        /* @var $model PhoneNumberVerificationFormInterface|Model */
         $model = new $this->modelClass();
 
-        if ($resend) {
+        if ($resent) {
             $model->sendOtp();
 
             return $this->redirect('index');
         }
+
+        if ($model->load(\Yii::$app->request->post())&& $model->validate() && $model->verify()) {
+
+            return $this->refresh();
+        }
+
 
         return $this->render('index', ['model' => $model]);
     }
