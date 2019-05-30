@@ -14,7 +14,7 @@ use codexten\yii\web\Controller;
 use yii\base\Model;
 use yii\helpers\Url;
 
-class PhoneNumberVerificationController extends Controller
+class EmailVerificationController extends Controller
 {
     /***
      * @var string
