@@ -24,6 +24,10 @@ class EmailVerificationController extends Controller
 
     public function actionIndex($resent = false)
     {
+        if (\Yii::$app->userSettings->get('auth.emailVerified')) {
+            return $this->goHome();
+        }
+
         /* @var $model PhoneNumberVerificationFormInterface|Model */
         $model = new $this->modelClass();
 

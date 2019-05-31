@@ -20,7 +20,7 @@ interface EmailVerificationFormInterface
     /**
      * @return string
      */
-    public function getPhoneNumber(): string;
+    public function getEmail(): string;
 
     /**
      * @return bool

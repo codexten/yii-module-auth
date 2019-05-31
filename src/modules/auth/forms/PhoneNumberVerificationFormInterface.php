@@ -13,7 +13,7 @@ use yii\db\ActiveRecordInterface;
 /**
  * Interface PhoneNumberVerificationFormInterface
  *
- * @property $phoneNumber
+ * @property $email
  *
  * @package codexten\yii\modules\auth\forms
  */
@@ -22,7 +22,7 @@ interface PhoneNumberVerificationFormInterface
     /**
      * @return string
      */
-    public function getPhoneNumber(): string;
+    public function getEmail(): string;
 
     /**
      * @return bool

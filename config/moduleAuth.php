@@ -45,6 +45,9 @@ return [
                 'phone-number-verification' => [
                     'class' => PhoneNumberVerificationController::class,
                 ],
+                'email-verification' => [
+                    'class' => \codexten\yii\modules\auth\controllers\EmailVerificationController::class,
+                ],
             ]
 //            'as globalAccess' => [
 //                'class' => '\codexten\yii\behaviors\GlobalAccessBehavior',

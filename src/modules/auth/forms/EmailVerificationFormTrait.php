@@ -57,7 +57,7 @@ trait EmailVerificationFormTrait
      */
     public function validateOtp($attribute)
     {
-        $userToken = UserTokenHelper::getPhoneNumberVerificationTokenByCode($this->otp);
+        $userToken = UserTokenHelper::getEmailVerificationTokenByCode($this->otp);
 
         if ($userToken === null) {
             $this->addError($attribute, 'Invalid OTP');
@@ -104,7 +104,7 @@ trait EmailVerificationFormTrait
      */
     public function generateOtp()
     {
-        $userToken = UserTokenHelper::generatePhoneNumberVerificationToken();
+        $userToken = UserTokenHelper::generateEmailVerificationToken();
 
         return $userToken->code;
     }
