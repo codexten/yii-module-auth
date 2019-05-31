@@ -92,11 +92,11 @@ class AccountController extends Controller
     public function actions()
     {
         return [
-            'login' => ArrayHelper::merge([
+            'login' => [
                 'class' => AccountLoginAction::class,
                 'modelClass' => LoginForm::class,
                 'layout' => '/base',
-            ], Yii::$container->definitions[AccountLoginAction::class]),
+            ],
         ];
     }
 

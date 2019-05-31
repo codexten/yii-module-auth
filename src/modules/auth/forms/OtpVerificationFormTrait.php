@@ -108,4 +108,12 @@ trait OtpVerificationFormTrait
 
         return $userToken->code;
     }
+
+    /**
+     * @return bool
+     */
+    public function verify(): bool
+    {
+        return \Yii::$app->userSettings->set('auth.mobileVerified', true);
+    }
 }

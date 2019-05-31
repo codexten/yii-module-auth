@@ -24,6 +24,10 @@ class PhoneNumberVerificationController extends Controller
 
     public function actionIndex($resent = false)
     {
+        if (\Yii::$app->userSettings->get('auth.mobileVerified')) {
+            return $this->goHome();
+        }
+
         /* @var $model PhoneNumberVerificationFormInterface|Model */
         $model = new $this->modelClass();
 
