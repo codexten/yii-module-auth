@@ -2,25 +2,24 @@
 
 namespace codexten\yii\modules\auth\controllers;
 
+use codexten\yii\helpers\ArrayHelper;
+use codexten\yii\modules\auth\actions\AccountLoginAction;
 use codexten\yii\modules\auth\Finder;
-use codexten\yii\modules\auth\models\Account;
 use codexten\yii\modules\auth\models\ForgotPasswordForm;
 use codexten\yii\modules\auth\models\LoginForm;
-use codexten\yii\modules\auth\models\User;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
+use codexten\yii\web\Controller;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\base\ExitException;
 use yii\base\InvalidConfigException;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
+
 
 /**
  * Controller that manages user authentication process.
@@ -90,6 +89,17 @@ class AccountController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'login' => ArrayHelper::merge([
+                'class' => AccountLoginAction::class,
+                'modelClass' => LoginForm::class,
+                'layout' => '/base',
+            ], Yii::$container->definitions[AccountLoginAction::class]),
+        ];
+    }
+
     public function beforeAction($action)
     {
         if ($action->id == 'logout') {
@@ -108,33 +118,33 @@ class AccountController extends Controller
      * @throws ExitException
      * @throws InvalidConfigException
      */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            $this->goHome();
-        }
-
-        /** @var LoginForm $model */
-        $model = Yii::createObject(LoginForm::class);
-        $event = $this->getFormEvent($model);
-
-        $this->performAjaxValidation($model);
-
-        $this->trigger(self::EVENT_BEFORE_LOGIN, $event);
-
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-            $this->trigger(self::EVENT_AFTER_LOGIN, $event);
-
-            return $this->goBack();
-        }
-
-        $this->layout = '/base';
-
-        return $this->render('login', [
-            'model' => $model,
-            'module' => $this->module,
-        ]);
-    }
+//    public function actionLogin()
+//    {
+//        if (!Yii::$app->user->isGuest) {
+//            $this->goHome();
+//        }
+//
+//        /** @var LoginForm $model */
+//        $model = Yii::createObject(LoginForm::class);
+//        $event = $this->getFormEvent($model);
+//
+//        $this->performAjaxValidation($model);
+//
+//        $this->trigger(self::EVENT_BEFORE_LOGIN, $event);
+//
+//        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+//            $this->trigger(self::EVENT_AFTER_LOGIN, $event);
+//
+//            return $this->goBack();
+//        }
+//
+//        $this->layout = '/base';
+//
+//        return $this->render('login', [
+//            'model' => $model,
+//            'module' => $this->module,
+//        ]);
+//    }
 
     /**
      * Logs the user out and then redirects to the homepage.
