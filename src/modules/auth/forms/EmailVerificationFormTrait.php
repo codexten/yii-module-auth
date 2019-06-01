@@ -75,34 +75,11 @@ trait EmailVerificationFormTrait
         $otp = $this->generateOtp();
 
         return Yii::$app->mailer->compose()
-            ->setFrom(Yii::getAlias(['mailer.from']))
+            ->setFrom(Yii::$app->params['mailer.from'])
             ->setTo($this->getEmail())
-            ->setSubject('Message subject')
-            ->setTextBody('Plain text content')
-            ->setHtmlBody('<b>HTML content</b>')
-            ->send();
-
-//        $otp = $this->otp;
-
-//        return \Yii::$app->sms->send("Your {$appName} verification code is {$otp}", $this->phoneNumber);
-
-//        $this->phoneNumber
-
-
-//        if (($token = $this->getToken()) == false) {
-//            $token = UserToken::createMobileVerificationToken(MatrimonyHelper::getMyId(),
-//                Time::SECONDS_IN_A_MINUTE * 5);
-//            $this->sendSms = true;
-//        }
-//        if ($this->sendSms && Yii::$app->request->isGet) {
-//            return MatrimonyHelper::sendTransactionSmsByTemplate(Yii::$app->user->identity->mobile_no, 'mobile-phone-number-verification', [
-//                'fullName' => Yii::$app->user->identity->getFullName(),
-//                'code' => Yii::$app->user->identity->member->code,
-//                'phone-number-verification' => $token->token,
-//            ]);
-//        }
-
-        return false;
+            ->setSubject("OTP confirmations - {$appName}")
+            ->setHtmlBody("Hi, <br/> Please use the following OTP <b>{$otp}</b> to verify your email id.")
+            ->queue();
     }
 
     /**
