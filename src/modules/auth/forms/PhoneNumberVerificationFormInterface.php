@@ -22,7 +22,7 @@ interface PhoneNumberVerificationFormInterface
     /**
      * @return string
      */
-    public function getEmail(): string;
+    public function getPhoneNumber(): string;
 
     /**
      * @return bool

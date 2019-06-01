@@ -7,9 +7,7 @@ namespace codexten\yii\modules\auth\forms;
 use cheatsheet\Time;
 use codexten\matrimony\MatrimonyHelper;
 use codexten\yii\modules\auth\helpers\UserTokenHelper;
-use codexten\yii\modules\auth\models\UserToken;
 use codexten\yii\sms\Sms;
-use phpDocumentor\Reflection\Types\Static_;
 use Yii;
 
 /**
@@ -78,7 +76,7 @@ trait OtpVerificationFormTrait
 
 //        $otp = $this->otp;
 
-//        return \Yii::$app->sms->send("Your {$appName} verification code is {$otp}", $this->phoneNumber);
+        return \Yii::$app->sms->send("Your {$appName} verification code is {$otp}", $this->phoneNumber);
 
 //        $this->phoneNumber
 

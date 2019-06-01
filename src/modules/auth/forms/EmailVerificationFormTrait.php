@@ -7,9 +7,7 @@ namespace codexten\yii\modules\auth\forms;
 use cheatsheet\Time;
 use codexten\matrimony\MatrimonyHelper;
 use codexten\yii\modules\auth\helpers\UserTokenHelper;
-use codexten\yii\modules\auth\models\UserToken;
 use codexten\yii\sms\Sms;
-use phpDocumentor\Reflection\Types\Static_;
 use Yii;
 
 /**
@@ -75,6 +73,14 @@ trait EmailVerificationFormTrait
     {
         $appName = Yii::$app->name;
         $otp = $this->generateOtp();
+
+        return Yii::$app->mailer->compose()
+            ->setFrom(Yii::getAlias(['mailer.from']))
+            ->setTo($this->getEmail())
+            ->setSubject('Message subject')
+            ->setTextBody('Plain text content')
+            ->setHtmlBody('<b>HTML content</b>')
+            ->send();
 
 //        $otp = $this->otp;
 
