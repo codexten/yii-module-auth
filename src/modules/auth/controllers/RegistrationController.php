@@ -100,9 +100,9 @@ class RegistrationController extends Controller
      */
     public function actionRegister()
     {
-        if (!$this->module->enableRegistration) {
-            throw new NotFoundHttpException();
-        }
+//        if (!$this->module->enableRegistration) {
+//            throw new NotFoundHttpException();
+//        }
 
         /** @var RegistrationForm $model */
         $model = Yii::createObject(RegistrationForm::class);

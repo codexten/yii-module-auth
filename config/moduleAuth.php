@@ -8,7 +8,10 @@
 
 use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\components\SiteHelper;
+use codexten\yii\modules\auth\controllers\AccountController;
+use codexten\yii\modules\auth\controllers\EmailVerificationController;
 use codexten\yii\modules\auth\controllers\PhoneNumberVerificationController;
+use codexten\yii\modules\auth\controllers\RegistrationController;
 use codexten\yii\modules\auth\models\User;
 
 return [
@@ -42,11 +45,18 @@ return [
             'viewPath' => '@codexten/yii/modules/auth/views',
             'layoutPath' => '@app/views/layout',
             'controllerMap' => [
+                'registration' => [
+                    'class' => RegistrationController::class,
+                ],
+                'account' => [
+                    'class' => AccountController::class,
+                    'viewPath' => '@codexten/yii/module/auth/views',
+                ],
                 'phone-number-verification' => [
                     'class' => PhoneNumberVerificationController::class,
                 ],
                 'email-verification' => [
-                    'class' => \codexten\yii\modules\auth\controllers\EmailVerificationController::class,
+                    'class' => EmailVerificationController::class,
                 ],
             ]
 //            'as globalAccess' => [

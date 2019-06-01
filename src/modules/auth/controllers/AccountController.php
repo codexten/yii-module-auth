@@ -2,7 +2,6 @@
 
 namespace codexten\yii\modules\auth\controllers;
 
-use codexten\yii\helpers\ArrayHelper;
 use codexten\yii\modules\auth\actions\AccountLoginAction;
 use codexten\yii\modules\auth\Finder;
 use codexten\yii\modules\auth\models\ForgotPasswordForm;
@@ -19,7 +18,6 @@ use yii\base\InvalidConfigException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
-
 
 /**
  * Controller that manages user authentication process.
