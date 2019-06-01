@@ -86,7 +86,7 @@ class RegistrationForm extends Model
     /**
      * @return User;
      */
-    protected function getUser()
+    public function getUser()
     {
         return $this->_user;
     }

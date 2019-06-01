@@ -12,6 +12,15 @@ use codexten\yii\base\Module;
 
 class AuthModule extends Module
 {
+    /**
+     * @var bool Whether to enable registration.
+     */
+    public $enableRegistration = false;
+
+    public $enableAutoLoginAfterRegistration = false;
+
+
+    // old settings may deprecate
     /** Email is changed right after user enter's new email address. */
     const STRATEGY_INSECURE = 0;
 
@@ -23,9 +32,6 @@ class AuthModule extends Module
 
     /** @var bool Whether to show flash messages. */
     public $enableFlashMessages = true;
-
-    /** @var bool Whether to enable registration. */
-    public $enableRegistration = false;
 
     /** @var bool Whether to remove password field from registration form. */
     public $enableGeneratingPassword = false;

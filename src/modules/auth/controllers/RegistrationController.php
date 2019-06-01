@@ -10,6 +10,7 @@ namespace codexten\yii\modules\auth\controllers;
 
 
 //use dektrium\user\Finder;
+use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\models\RegistrationForm;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
@@ -19,7 +20,6 @@ use Yii;
 use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -116,7 +116,13 @@ class RegistrationController extends Controller
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
             Yii::$app->getSession()->setFlash('success', Yii::t('codexten:user', 'Your account has been created'));
 
-            return $this->redirect(Yii::$app->user->logoutUrl);
+            if ($this->module->enableAutoLoginAfterRegistration) {
+
+                Yii::$app->getUser()->login($model->getUser());
+            }
+
+
+            return $this->goHome();
         }
 
         return $this->render('register', [
