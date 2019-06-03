@@ -10,13 +10,13 @@ namespace codexten\yii\modules\auth\controllers;
 
 
 //use dektrium\user\Finder;
+use codexten\yii\modules\auth\actions\RegistrationRegisterAction;
 use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\models\RegistrationForm;
 use codexten\yii\modules\auth\Module;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
 use Throwable;
-use Yii;
 use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;
@@ -86,6 +86,17 @@ class RegistrationController extends Controller
 
     public $layout = '/base';
 
+    public function actions()
+    {
+        return [
+            'register' => [
+                'class' => RegistrationRegisterAction::class,
+                'modelClass' => RegistrationForm::class,
+            ],
+        ];
+    }
+
+
     /**
      * Displays the registration page.
      * After successful registration if enableConfirmation is enabled shows info message otherwise
@@ -98,38 +109,10 @@ class RegistrationController extends Controller
      * @throws InvalidConfigException
      * @throws Exception
      */
-    public function actionRegister()
-    {
-//        if (!$this->module->enableRegistration) {
-//            throw new NotFoundHttpException();
-//        }
-
-        /** @var RegistrationForm $model */
-        $model = Yii::createObject(RegistrationForm::class);
-        $event = $this->getFormEvent($model);
-
-        $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
-
-        $this->performAjaxValidation($model);
-
-        if ($model->load(Yii::$app->request->post()) && $model->register()) {
-            $this->trigger(self::EVENT_AFTER_REGISTER, $event);
-            Yii::$app->getSession()->setFlash('success', Yii::t('codexten:user', 'Your account has been created'));
-
-            if ($this->module->enableAutoLoginAfterRegistration) {
-
-                Yii::$app->getUser()->login($model->getUser());
-            }
-
-
-            return $this->goHome();
-        }
-
-        return $this->render('register', [
-            'model' => $model,
-            'module' => $this->module,
-        ]);
-    }
+//    public function actionRegister()
+//    {
+//
+//    }
 
 //    /**
 //     * Displays page where user can create new account that will be connected to social account.
