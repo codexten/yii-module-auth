@@ -87,13 +87,14 @@ class AccountController extends Controller
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function actions()
     {
         return [
             'login' => [
                 'class' => AccountLoginAction::class,
-                'modelClass' => LoginForm::class,
-                'layout' => '/base',
             ],
         ];
     }

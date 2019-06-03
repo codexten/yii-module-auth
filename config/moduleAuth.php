@@ -12,10 +12,12 @@ use codexten\yii\modules\auth\controllers\AccountController;
 use codexten\yii\modules\auth\controllers\EmailVerificationController;
 use codexten\yii\modules\auth\controllers\PhoneNumberVerificationController;
 use codexten\yii\modules\auth\controllers\RegistrationController;
+use codexten\yii\modules\auth\models\LoginForm;
 use codexten\yii\modules\auth\models\User;
 
 return [
     'aliases' => [
+        '@moduleAuth' => '@codexten/yii/modules/auth',
         '@account' => '/user/account',
         '@registration' => '/user/registration',
     ],
@@ -172,6 +174,14 @@ return [
 //                        'allow' => true,
 //                        'roles' => ['admin'],
 //                    ],
+        ],
+    ],
+    'container' => [
+        'definitions' => [
+            \codexten\yii\modules\auth\actions\AccountLoginAction::class => [
+                'modelClass' => LoginForm::class,
+                'layout' => '/base',
+            ],
         ],
     ],
 ];
