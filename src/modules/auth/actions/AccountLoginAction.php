@@ -13,7 +13,9 @@ class AccountLoginAction extends Action
      */
     public function run()
     {
-        $this->processLoginForm();
+        if ($this->processLoginForm()) {
+            return;
+        }
 
         return $this->render();
     }

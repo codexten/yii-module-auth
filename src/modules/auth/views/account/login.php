@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-            <?= $this->render('@codexten/yii/modules/auth/views/account/login/_form.php', [
+            <?= $this->render('@moduleAuth/views/account/login/_form.php', [
                 'model' => $model,
                 'module' => $module,
             ]) ?>
