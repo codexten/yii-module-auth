@@ -13,6 +13,7 @@ use codexten\yii\modules\auth\controllers\EmailVerificationController;
 use codexten\yii\modules\auth\controllers\PhoneNumberVerificationController;
 use codexten\yii\modules\auth\controllers\RegistrationController;
 use codexten\yii\modules\auth\models\LoginForm;
+use codexten\yii\modules\auth\models\RegistrationForm;
 use codexten\yii\modules\auth\models\User;
 
 return [
@@ -180,6 +181,10 @@ return [
         'definitions' => [
             \codexten\yii\modules\auth\actions\AccountLoginAction::class => [
                 'modelClass' => LoginForm::class,
+                'layout' => '/base',
+            ],
+            \codexten\yii\modules\auth\actions\RegistrationRegisterAction::class => [
+                'modelClass' => RegistrationForm::class,
                 'layout' => '/base',
             ],
         ],

@@ -20,7 +20,7 @@ use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\web\User; ?>
 <div class="page-auth-account-login">
 
-    <?= $this->render('@codexten/yii/modules/auth/views/registration/register/_form.php', [
+    <?= $this->render('@moduleAuth/views/registration/register/_form.php', [
         'model' => $model,
         'module' => $module,
     ]) ?>

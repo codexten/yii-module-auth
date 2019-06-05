@@ -91,7 +91,6 @@ class RegistrationController extends Controller
         return [
             'register' => [
                 'class' => RegistrationRegisterAction::class,
-                'modelClass' => RegistrationForm::class,
             ],
         ];
     }
