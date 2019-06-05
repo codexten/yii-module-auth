@@ -13,7 +13,6 @@ use codexten\yii\web\Controller;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
-use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -73,7 +72,7 @@ class AccountController extends Controller
     const EVENT_AFTER_CONNECT = 'afterConnect';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -109,41 +108,6 @@ class AccountController extends Controller
 
         return parent::beforeAction($action);
     }
-
-    /**
-     * Displays the login page.
-     *
-     * @return string|Response
-     * @throws ExitException
-     * @throws InvalidConfigException
-     */
-//    public function actionLogin()
-//    {
-//        if (!Yii::$app->user->isGuest) {
-//            $this->goHome();
-//        }
-//
-//        /** @var LoginForm $model */
-//        $model = Yii::createObject(LoginForm::class);
-//        $event = $this->getFormEvent($model);
-//
-//        $this->performAjaxValidation($model);
-//
-//        $this->trigger(self::EVENT_BEFORE_LOGIN, $event);
-//
-//        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-//            $this->trigger(self::EVENT_AFTER_LOGIN, $event);
-//
-//            return $this->goBack();
-//        }
-//
-//        $this->layout = '/base';
-//
-//        return $this->render('login', [
-//            'model' => $model,
-//            'module' => $this->module,
-//        ]);
-//    }
 
     /**
      * Logs the user out and then redirects to the homepage.
