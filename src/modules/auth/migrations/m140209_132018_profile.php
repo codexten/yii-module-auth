@@ -34,4 +34,14 @@ class m140209_132018_profile extends Migration
     {
         $this->dropTable('{{%profile}}');
     }
+
+    /**
+     * @return array
+     */
+    public static function alternatives()
+    {
+        return [
+            'entero\module\user\migrations\m140209_132018_profile',
+        ];
+    }
 }
