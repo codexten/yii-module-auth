@@ -1,5 +1,6 @@
 {
   "name": "codexten/yii-module-auth",
+  "keywords":["codexten", "yii"],
   "type": "library",
   "description": "Auth module for yii 2.0 or higher",
   "require": {
@@ -12,9 +13,6 @@
     "psr-4": {
       "codexten\\yii\\modules\\auth\\": "src/modules/auth"
     }
-  },
-  "suggest": {
-    "codexten/yii-sms": "for sending SMS"
   },
   "extra": {
     "branch-alias": {
