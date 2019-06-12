@@ -22,12 +22,12 @@ trait RegistrationRegisterActionTrait
         $model = Yii::createObject($this->modelClass);
 
 //        $event = $this->getFormEvent($model);
-//        $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
+        $this->trigger(RegistrationRegisterAction::EVENT_BEFORE_REGISTER, $event);
 
         $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
-            $this->trigger(self::EVENT_AFTER_REGISTER, $event);
+            $this->trigger(RegistrationRegisterAction::EVENT_AFTER_REGISTER, $event);
             Yii::$app->getSession()->setFlash('success', Yii::t('codexten:user', 'Your account has been created'));
 
             if ($this->module->enableAutoLoginAfterRegistration) {
@@ -36,7 +36,7 @@ trait RegistrationRegisterActionTrait
             }
 
 
-            return $this->goHome();
+            return $this->controller->goHome();
         }
 
         $this->setViewParams([

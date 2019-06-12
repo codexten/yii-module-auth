@@ -25,6 +25,7 @@
       "adminSettings": "config/adminSettings.php",
       "moduleAuth": [
         "$web",
+        "$userSettings",
         "config/moduleAuth.php"
       ],
       "migrationNamespaces": "config/migrationNamespaces.php"
