@@ -83,13 +83,13 @@ class UserTokenHelper
         return $model->save() ? $model : null;
     }
 
-    public function getToken(string $type, int $userId = null)
+    public static function getToken(string $type, int $userId = null)
     {
         if ($userId === null) {
             $userId = UserHelper::getMyId();
         }
 
-        return UserToken::find()->byType($type)->byToken($userId)->notExpired()->one();
+        return UserToken::find()->byType($type)->byUserId($userId)->notExpired()->one();
     }
 
     /**

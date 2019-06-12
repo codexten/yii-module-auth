@@ -40,7 +40,7 @@ class UserTokenQuery extends ActiveQuery
      */
     public function byToken($token)
     {
-        $this->andWhere(['token' => $token]);
+        $this->andWhere(['code' => $token]);
 
         return $this;
     }

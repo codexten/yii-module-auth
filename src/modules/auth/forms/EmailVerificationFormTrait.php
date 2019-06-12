@@ -6,6 +6,7 @@ namespace codexten\yii\modules\auth\forms;
 
 use cheatsheet\Time;
 use codexten\matrimony\MatrimonyHelper;
+use codexten\yii\modules\auth\helpers\UserHelper;
 use codexten\yii\modules\auth\helpers\UserTokenHelper;
 use codexten\yii\sms\Sms;
 use Yii;
@@ -37,6 +38,14 @@ trait EmailVerificationFormTrait
         ];
     }
 
+    public function init()
+    {
+        parent::init();
+        $token = UserTokenHelper::getToken(UserTokenHelper::TYPE_EMAIL_VERIFICATION, UserHelper::getMyId());
+        if ($token === null) {
+            $this->sendOtp();
+        }
+    }
 //    /**
 //     * @inheritdoc
 //     */
