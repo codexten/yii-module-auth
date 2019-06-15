@@ -6,6 +6,7 @@
   "require": {
     "codexten/yii-user": "^2.0.0",
     "codexten/yii-web": "^2.0.0",
+    "codexten/yii-user-settings": "^2.0.0",
     "codexten/yii-admin-settings": "^2.0.0"
   },
   "autoload": {
@@ -22,6 +23,7 @@
       "adminSettings": "config/adminSettings.php",
       "moduleAuth": [
         "$web",
+        "$userSettings",
         "config/moduleAuth.php"
       ],
       "migrationNamespaces": "config/migrationNamespaces.php"
