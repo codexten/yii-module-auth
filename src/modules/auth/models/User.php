@@ -176,10 +176,21 @@ class User extends \codexten\yii\models\User implements IdentityInterface
         }
 
         if (!empty($this->password)) {
-            $this->setAttribute('password_hash', Password::hash($this->password));
+            $this->setPasswordHash($this->password);
         }
 
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @param $password
+     *
+     * @return int
+     * @throws Exception
+     */
+    public function setPasswordHash($password)
+    {
+        return $this->updateAttributes(['password_hash' => Password::hash($password)]);
     }
 
     // getter methods
