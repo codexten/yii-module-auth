@@ -14,6 +14,7 @@ use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\base\InvalidConfigException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -117,6 +118,10 @@ class AccountController extends Controller
      */
     public function actionLogout()
     {
+        if (Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
         $event = $this->getUserEvent(Yii::$app->user->identity);
 
         $this->trigger(self::EVENT_BEFORE_LOGOUT, $event);

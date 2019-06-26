@@ -6,6 +6,8 @@
  * Time: 3:07 PM
  */
 
+use codexten\yii\modules\auth\actions\AccountLoginAction;
+use codexten\yii\modules\auth\actions\RegistrationRegisterAction;
 use codexten\yii\modules\auth\AuthModule;
 use codexten\yii\modules\auth\components\SiteHelper;
 use codexten\yii\modules\auth\controllers\AccountController;
@@ -179,11 +181,11 @@ return [
     ],
     'container' => [
         'definitions' => [
-            \codexten\yii\modules\auth\actions\AccountLoginAction::class => [
+            AccountLoginAction::class => [
                 'modelClass' => LoginForm::class,
                 'layout' => '/base',
             ],
-            \codexten\yii\modules\auth\actions\RegistrationRegisterAction::class => [
+            RegistrationRegisterAction::class => [
                 'modelClass' => RegistrationForm::class,
                 'layout' => '/base',
             ],
