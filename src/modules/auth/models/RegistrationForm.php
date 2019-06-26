@@ -16,6 +16,8 @@ use yii\db\Exception;
 
 /**
  * Registration form collects user input on registration process, validates it and creates new User model.
+ *
+ * @property User $user
  */
 class RegistrationForm extends Model
 {
