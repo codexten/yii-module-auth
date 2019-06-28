@@ -6,3 +6,11 @@ migration:
     fields: |
   alter_user_token_table:
     fields: |
+model:
+  rbac_auth_rule:
+    ns: codexten\yii\modules\auth\models
+  rbac_auth_item:
+    ns: codexten\yii\modules\auth\models
+  rbac_auth_item_child:
+    ns: codexten\yii\modules\auth\models
+
