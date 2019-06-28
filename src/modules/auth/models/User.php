@@ -114,7 +114,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
         return [
             // username rules
             'usernameTrim' => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'usernameRequired' => ['username', 'required'],
             'usernameMatch' => ['username', 'match', 'pattern' => static::$usernameRegexp],
             'usernameLength' => ['username', 'string', 'min' => 3, 'max' => 255],
             'usernameUnique' => [
@@ -125,7 +125,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 
             // email rules
             'emailTrim' => ['email', 'trim'],
-            'emailRequired' => ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
+            'emailRequired' => ['email', 'required',],
             'emailPattern' => ['email', 'email'],
             'emailLength' => ['email', 'string', 'max' => 255],
             'emailUnique' => [
@@ -135,8 +135,8 @@ class User extends \codexten\yii\models\User implements IdentityInterface
             ],
 
             // password rules
-            'passwordRequired' => ['password', 'required', 'on' => ['register']],
-            'passwordLength' => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
+            'passwordRequired' => ['password', 'required'],
+            'passwordLength' => ['password', 'string', 'min' => 6, 'max' => 72,],
         ];
     }
 
@@ -180,6 +180,16 @@ class User extends \codexten\yii\models\User implements IdentityInterface
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function getRoles()
+    {
+        return $this->hasMany(RbacAuthItem::class, ['name' => 'item_name'])->via('authAssignment');
+    }
+
+    public function getAuthAssignment()
+    {
+        return $this->hasMany(RbacAuthAssignment::class, ['user_id' => 'id']);
     }
 
     /**
