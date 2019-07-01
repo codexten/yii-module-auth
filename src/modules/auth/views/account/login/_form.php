@@ -1,12 +1,13 @@
 <?php
 
+use codexten\yii\modules\auth\AuthModule;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
  * @var codexten\yii\modules\auth\models\LoginForm $model
- * @var codexten\yii\modules\auth\Module $module
+ * @var AuthModule $module
  */
 ?>
 
@@ -37,3 +38,13 @@ use yii\widgets\ActiveForm;
     </p>
 
 <?php endif ?>
+
+<?php if ($module->enablePasswordRecovery): ?>
+
+    <p class="text-center">
+        <?= Html::a('Forgot password?', ['/auth/recovery/request']) ?>
+    </p>
+
+<?php endif ?>
+
+

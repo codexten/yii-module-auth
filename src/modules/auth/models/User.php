@@ -298,7 +298,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 //
 //            if ($this->module->enableConfirmation) {
 //                /** @var Token $token */
-//                $token = \Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRMATION]);
+//                $token = \Yii::createObject(['class' => Token::class, 'type' => Token::TYPE_CONFIRMATION]);
 //                $token->link('user', $this);
 //            }
 //
@@ -506,7 +506,7 @@ class User extends \codexten\yii\models\User implements IdentityInterface
 //        parent::afterSave($insert, $changedAttributes);
 //        if ($insert) {
 //            if ($this->_profile == null) {
-//                $this->_profile = \Yii::createObject(Profile::className());
+//                $this->_profile = \Yii::createObject(Profile::class);
 //            }
 //            $this->_profile->link('user', $this);
 //        }

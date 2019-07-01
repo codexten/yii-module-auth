@@ -4,6 +4,8 @@ namespace codexten\yii\modules\auth\helpers;
 
 
 use codexten\yii\modules\auth\models\UserToken;
+use Yii;
+use yii\base\Exception;
 
 /**
  * Class UserTokenHelper
@@ -14,6 +16,7 @@ class UserTokenHelper
 {
     const TYPE_PHONE_NUMBER_VERIFICATION = 'mobile_verification';
     const TYPE_EMAIL_VERIFICATION = 'email_verification';
+    const TYPE_PASSWORD_RECOVERY = 'password_recovery';
 
     /**
      * @param string $code
@@ -53,6 +56,27 @@ class UserTokenHelper
         }
 
         return self::generateToken(self::TYPE_EMAIL_VERIFICATION, $code, $duration, $userId);
+    }
+
+    /**
+     * @param string $code
+     * @param int $duration
+     *
+     * @param int|null $userId
+     *
+     * @return UserToken|null
+     * @throws Exception
+     */
+    public static function generatePasswordRecoveryToken(
+        int $userId = null,
+        string $code = null,
+        int $duration = 3600
+    ) {
+        if ($code === null) {
+            $code = Yii::$app->security->generateRandomString();
+        }
+
+        return self::generateToken(self::TYPE_PASSWORD_RECOVERY, $code, $duration, $userId);
     }
 
 
@@ -116,5 +140,10 @@ class UserTokenHelper
     public static function getEmailVerificationTokenByCode(string $code, int $userId = null): ?UserToken
     {
         return self::getUserTokenByCode($code, self::TYPE_EMAIL_VERIFICATION, $userId);
+    }
+
+    public static function getPasswordRecoveryTokenByCode(string $code, int $userId = null): ?UserToken
+    {
+        return self::getUserTokenByCode($code, self::TYPE_PASSWORD_RECOVERY, $userId);
     }
 }

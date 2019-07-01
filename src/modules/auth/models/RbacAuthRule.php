@@ -68,7 +68,7 @@ class RbacAuthRule extends ActiveRecord
      */
     public function getRbacAuthItems()
     {
-        return $this->hasMany(RbacAuthItem::className(), ['rule_name' => 'name']);
+        return $this->hasMany(RbacAuthItem::class, ['rule_name' => 'name']);
     }
 
 

@@ -1,27 +1,19 @@
 <?php
 
-/*
- * This file is part of the Dektrium project.
- *
- * (c) Dektrium project <http://github.com/dektrium/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace codexten\yii\modules\auth\controllers;
 
 use codexten\yii\modules\auth\AuthModule;
-use codexten\yii\modules\auth\Finder;
-use codexten\yii\modules\auth\models\RecoveryForm;
-use codexten\yii\modules\auth\models\Token;
+use codexten\yii\modules\auth\forms\PasswordResetForm;
+use codexten\yii\modules\auth\forms\RecoveryRequestForm;
+use codexten\yii\modules\auth\helpers\UserTokenHelper;
 use codexten\yii\modules\auth\traits\AjaxValidationTrait;
 use codexten\yii\modules\auth\traits\EventTrait;
 use Yii;
-use yii\base\Module;
-use yii\filters\AccessControl;
+use yii\base\ExitException;
+use yii\base\InvalidConfigException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * RecoveryController manages password recovery process.
@@ -35,75 +27,48 @@ class RecoveryController extends Controller
     use AjaxValidationTrait;
     use EventTrait;
 
-    /**
-     * Event is triggered before requesting password reset.
-     * Triggered with \codexten\yii\modules\auth\events\FormEvent.
-     */
-    const EVENT_BEFORE_REQUEST = 'beforeRequest';
+//    /**
+//     * Event is triggered before requesting password reset.
+//     * Triggered with \codexten\yii\modules\auth\events\FormEvent.
+//     */
+//    const EVENT_BEFORE_REQUEST = 'beforeRequest';
+//
+//    /**
+//     * Event is triggered after requesting password reset.
+//     * Triggered with \codexten\yii\modules\auth\events\FormEvent.
+//     */
+//    const EVENT_AFTER_REQUEST = 'afterRequest';
+//
+//    /**
+//     * Event is triggered before validating recovery token.
+//     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent. May not have $form property set.
+//     */
+//    const EVENT_BEFORE_TOKEN_VALIDATE = 'beforeTokenValidate';
+//
+//    /**
+//     * Event is triggered after validating recovery token.
+//     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent. May not have $form property set.
+//     */
+//    const EVENT_AFTER_TOKEN_VALIDATE = 'afterTokenValidate';
+//
+//    /**
+//     * Event is triggered before resetting password.
+//     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent.
+//     */
+//    const EVENT_BEFORE_RESET = 'beforeReset';
+//
+//    /**
+//     * Event is triggered after resetting password.
+//     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent.
+//     */
+//    const EVENT_AFTER_RESET = 'afterReset';
+
 
     /**
-     * Event is triggered after requesting password reset.
-     * Triggered with \codexten\yii\modules\auth\events\FormEvent.
-     */
-    const EVENT_AFTER_REQUEST = 'afterRequest';
-
-    /**
-     * Event is triggered before validating recovery token.
-     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent. May not have $form property set.
-     */
-    const EVENT_BEFORE_TOKEN_VALIDATE = 'beforeTokenValidate';
-
-    /**
-     * Event is triggered after validating recovery token.
-     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent. May not have $form property set.
-     */
-    const EVENT_AFTER_TOKEN_VALIDATE = 'afterTokenValidate';
-
-    /**
-     * Event is triggered before resetting password.
-     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent.
-     */
-    const EVENT_BEFORE_RESET = 'beforeReset';
-
-    /**
-     * Event is triggered after resetting password.
-     * Triggered with \codexten\yii\modules\auth\events\ResetPasswordEvent.
-     */
-    const EVENT_AFTER_RESET = 'afterReset';
-
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string           $id
-     * @param Module $module
-     * @param Finder           $finder
-     * @param array            $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
-
-    /** @inheritdoc */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    ['allow' => true, 'actions' => ['request', 'reset'], 'roles' => ['?']],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Shows page where user can request password recovery.
-     *
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException
+     * @throws ExitException
+     * @throws InvalidConfigException
      */
     public function actionRequest()
     {
@@ -111,22 +76,15 @@ class RecoveryController extends Controller
             throw new NotFoundHttpException();
         }
 
-        /** @var RecoveryForm $model */
-        $model = Yii::createObject([
-            'class'    => RecoveryForm::className(),
-            'scenario' => RecoveryForm::SCENARIO_REQUEST,
-        ]);
-        $event = $this->getFormEvent($model);
+        /** @var RecoveryRequestForm $model */
+        $model = Yii::createObject(['class' => RecoveryRequestForm::class,]);
 
         $this->performAjaxValidation($model);
-        $this->trigger(self::EVENT_BEFORE_REQUEST, $event);
 
-        if ($model->load(Yii::$app->request->post()) && $model->sendRecoveryMessage()) {
-            $this->trigger(self::EVENT_AFTER_REQUEST, $event);
-            return $this->render('/message', [
-                'title'  => Yii::t('codexten:user', 'Recovery message sent'),
-                'module' => $this->module,
-            ]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->sendRecoveryMessage()) {
+            Yii::$app->session->setFlash('success', 'Recovery message sent');
+
+            return $this->refresh();
         }
 
         return $this->render('request', [
@@ -137,7 +95,7 @@ class RecoveryController extends Controller
     /**
      * Displays page where user can reset password.
      *
-     * @param int    $id
+     * @param int $id
      * @param string $code
      *
      * @return string
@@ -149,47 +107,84 @@ class RecoveryController extends Controller
             throw new NotFoundHttpException();
         }
 
-        /** @var Token $token */
-        $token = $this->finder->findToken(['user_id' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
-        if (empty($token) || ! $token instanceof Token) {
+        $token = UserTokenHelper::getPasswordRecoveryTokenByCode($code, $id);
+
+        if ($token === null) {
             throw new NotFoundHttpException();
         }
-        $event = $this->getResetPasswordEvent($token);
 
-        $this->trigger(self::EVENT_BEFORE_TOKEN_VALIDATE, $event);
-
-        if ($token === null || $token->isExpired || $token->user === null) {
-            $this->trigger(self::EVENT_AFTER_TOKEN_VALIDATE, $event);
-            Yii::$app->session->setFlash(
-                'danger',
-                Yii::t('codexten:user', 'Recovery link is invalid or expired. Please try requesting a new one.')
-            );
-            return $this->render('/message', [
-                'title'  => Yii::t('codexten:user', 'Invalid or expired link'),
-                'module' => $this->module,
-            ]);
-        }
-
-        /** @var RecoveryForm $model */
-        $model = Yii::createObject([
-            'class'    => RecoveryForm::className(),
-            'scenario' => RecoveryForm::SCENARIO_RESET,
+        $model = new PasswordResetForm([
+            'user' => $token->user,
         ]);
-        $event->setForm($model);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $token->delete();
 
-        $this->performAjaxValidation($model);
-        $this->trigger(self::EVENT_BEFORE_RESET, $event);
-
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->resetPassword($token)) {
-            $this->trigger(self::EVENT_AFTER_RESET, $event);
-            return $this->render('/message', [
-                'title'  => Yii::t('codexten:user', 'Password has been changed'),
-                'module' => $this->module,
-            ]);
+            return $this->render('reset/_message');
         }
 
         return $this->render('reset', [
             'model' => $model,
         ]);
     }
+
+    /**
+     * Displays page where user can reset password.
+     *
+     * @param int $id
+     * @param string $code
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+//    public function actionReset($id, $code)
+//    {
+//        if (!$this->module->enablePasswordRecovery) {
+//            throw new NotFoundHttpException();
+//        }
+//
+//        /** @var Token $token */
+//        $token = $this->finder->findToken(['user_id' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
+//        if (empty($token) || !$token instanceof Token) {
+//            throw new NotFoundHttpException();
+//        }
+//        $event = $this->getResetPasswordEvent($token);
+//
+//        $this->trigger(self::EVENT_BEFORE_TOKEN_VALIDATE, $event);
+//
+//        if ($token === null || $token->isExpired || $token->user === null) {
+//            $this->trigger(self::EVENT_AFTER_TOKEN_VALIDATE, $event);
+//            Yii::$app->session->setFlash(
+//                'danger',
+//                Yii::t('codexten:user', 'Recovery link is invalid or expired. Please try requesting a new one.')
+//            );
+//
+//            return $this->render('/message', [
+//                'title' => Yii::t('codexten:user', 'Invalid or expired link'),
+//                'module' => $this->module,
+//            ]);
+//        }
+//
+//        /** @var RecoveryRequestForm $model */
+//        $model = Yii::createObject([
+//            'class' => RecoveryRequestForm::class,
+//            'scenario' => RecoveryRequestForm::SCENARIO_RESET,
+//        ]);
+//        $event->setForm($model);
+//
+//        $this->performAjaxValidation($model);
+//        $this->trigger(self::EVENT_BEFORE_RESET, $event);
+//
+//        if ($model->load(Yii::$app->getRequest()->post()) && $model->resetPassword($token)) {
+//            $this->trigger(self::EVENT_AFTER_RESET, $event);
+//
+//            return $this->render('/message', [
+//                'title' => Yii::t('codexten:user', 'Password has been changed'),
+//                'module' => $this->module,
+//            ]);
+//        }
+//
+//        return $this->render('reset', [
+//            'model' => $model,
+//        ]);
+//    }
 }

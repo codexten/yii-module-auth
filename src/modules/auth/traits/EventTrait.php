@@ -39,7 +39,7 @@ trait EventTrait
      */
     protected function getFormEvent(Model $form)
     {
-        return Yii::createObject(['class' => FormEvent::className(), 'form' => $form]);
+        return Yii::createObject(['class' => FormEvent::class, 'form' => $form]);
     }
 
     /**
@@ -49,7 +49,7 @@ trait EventTrait
      */
     protected function getUserEvent(User $user)
     {
-        return Yii::createObject(['class' => UserEvent::className(), 'user' => $user]);
+        return Yii::createObject(['class' => UserEvent::class, 'user' => $user]);
     }
 
     /**
@@ -59,7 +59,7 @@ trait EventTrait
      */
     protected function getProfileEvent(Profile $profile)
     {
-        return Yii::createObject(['class' => ProfileEvent::className(), 'profile' => $profile]);
+        return Yii::createObject(['class' => ProfileEvent::class, 'profile' => $profile]);
     }
 
 
@@ -71,7 +71,7 @@ trait EventTrait
      */
     protected function getConnectEvent(Account $account, User $user)
     {
-        return Yii::createObject(['class' => ConnectEvent::className(), 'account' => $account, 'user' => $user]);
+        return Yii::createObject(['class' => ConnectEvent::class, 'account' => $account, 'user' => $user]);
     }
 
     /**
@@ -82,7 +82,7 @@ trait EventTrait
      */
     protected function getAuthEvent(Account $account, ClientInterface $client)
     {
-        return Yii::createObject(['class' => AuthEvent::className(), 'account' => $account, 'client' => $client]);
+        return Yii::createObject(['class' => AuthEvent::class, 'account' => $account, 'client' => $client]);
     }
 
     /**
@@ -93,6 +93,6 @@ trait EventTrait
      */
     protected function getResetPasswordEvent(Token $token = null, RecoveryForm $form = null)
     {
-        return Yii::createObject(['class' => ResetPasswordEvent::className(), 'token' => $token, 'form' => $form]);
+        return Yii::createObject(['class' => ResetPasswordEvent::class, 'token' => $token, 'form' => $form]);
     }
 }

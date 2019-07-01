@@ -1,45 +1,33 @@
 <?php
 
-/*
- * This file is part of the Dektrium project.
- *
- * (c) Dektrium project <http://github.com/dektrium>
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- */
-
+use codexten\yii\modules\auth\forms\PasswordResetForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var codexten\yii\modules\auth\models\RecoveryForm $model
+ * @var PasswordResetForm $model
+ * @var array $_params_
  */
 
 $this->title = Yii::t('codexten:user', 'Reset your password');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-            </div>
-            <div class="panel-body">
-                <?php $form = ActiveForm::begin([
-                    'id' => 'password-recovery-form',
-                    'enableAjaxValidation' => true,
-                    'enableClientValidation' => false,
-                ]); ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+<div class="page-auth-recovery-reset">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
 
-                <?= Html::submitButton(Yii::t('codexten:user', 'Finish'), ['class' => 'btn btn-success btn-block']) ?><br>
+            <?php $form = ActiveForm::begin(); ?>
 
-                <?php ActiveForm::end(); ?>
-            </div>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+
+            <?= $form->field($model, 'repeat_password')->passwordInput() ?>
+
+            <?= Html::submitButton(Yii::t('codexten:user', 'save'), ['class' => 'btn btn-primary btn-block']) ?>
+
+            <?php ActiveForm::end(); ?>
+
         </div>
     </div>
 </div>

@@ -127,6 +127,12 @@ return [
                 'roles' => ['?'],
             ],
             [
+                'controllers' => ['auth/recovery'],
+                'allow' => true,
+                'actions' => ['request','reset'],
+                'roles' => ['?'],
+            ],
+            [
                 'controllers' => ['auth/registration'],
                 'allow' => true,
                 'actions' => ['confirmation', 'resend'],

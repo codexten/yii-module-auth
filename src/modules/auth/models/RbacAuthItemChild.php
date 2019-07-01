@@ -65,7 +65,7 @@ class RbacAuthItemChild extends ActiveRecord
      */
     public function getParent0()
     {
-        return $this->hasOne(RbacAuthItem::className(), ['name' => 'parent']);
+        return $this->hasOne(RbacAuthItem::class, ['name' => 'parent']);
     }
 
     /**
@@ -73,7 +73,7 @@ class RbacAuthItemChild extends ActiveRecord
      */
     public function getChild0()
     {
-        return $this->hasOne(RbacAuthItem::className(), ['name' => 'child']);
+        return $this->hasOne(RbacAuthItem::class, ['name' => 'child']);
     }
 
 

@@ -80,7 +80,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getRbacAuthAssignments()
     {
-        return $this->hasMany(RbacAuthAssignment::className(), ['item_name' => 'name']);
+        return $this->hasMany(RbacAuthAssignment::class, ['item_name' => 'name']);
     }
 
     /**
@@ -88,7 +88,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getRuleName()
     {
-        return $this->hasOne(RbacAuthRule::className(), ['name' => 'rule_name']);
+        return $this->hasOne(RbacAuthRule::class, ['name' => 'rule_name']);
     }
 
     /**
@@ -96,7 +96,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getRbacAuthItemChildren()
     {
-        return $this->hasMany(RbacAuthItemChild::className(), ['parent' => 'name']);
+        return $this->hasMany(RbacAuthItemChild::class, ['parent' => 'name']);
     }
 
     /**
@@ -104,7 +104,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getRbacAuthItemChildren0()
     {
-        return $this->hasMany(RbacAuthItemChild::className(), ['child' => 'name']);
+        return $this->hasMany(RbacAuthItemChild::class, ['child' => 'name']);
     }
 
     /**
@@ -112,7 +112,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getChildren()
     {
-        return $this->hasMany(RbacAuthItem::className(), ['name' => 'child'])->viaTable('{{%rbac_auth_item_child}}', ['parent' => 'name']);
+        return $this->hasMany(RbacAuthItem::class, ['name' => 'child'])->viaTable('{{%rbac_auth_item_child}}', ['parent' => 'name']);
     }
 
     /**
@@ -120,7 +120,7 @@ class RbacAuthItem extends ActiveRecord
      */
     public function getParents()
     {
-        return $this->hasMany(RbacAuthItem::className(), ['name' => 'parent'])->viaTable('{{%rbac_auth_item_child}}', ['child' => 'name']);
+        return $this->hasMany(RbacAuthItem::class, ['name' => 'parent'])->viaTable('{{%rbac_auth_item_child}}', ['child' => 'name']);
     }
 
 

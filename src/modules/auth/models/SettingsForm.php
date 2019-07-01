@@ -163,7 +163,7 @@ class SettingsForm extends Model
         $this->user->unconfirmed_email = $this->email;
         /** @var Token $token */
         $token = Yii::createObject([
-            'class'   => Token::className(),
+            'class'   => Token::class,
             'user_id' => $this->user->id,
             'type'    => Token::TYPE_CONFIRM_NEW_EMAIL,
         ]);
@@ -185,7 +185,7 @@ class SettingsForm extends Model
         $this->defaultEmailChange();
         /** @var Token $token */
         $token = Yii::createObject([
-            'class'   => Token::className(),
+            'class'   => Token::class,
             'user_id' => $this->user->id,
             'type'    => Token::TYPE_CONFIRM_OLD_EMAIL,
         ]);

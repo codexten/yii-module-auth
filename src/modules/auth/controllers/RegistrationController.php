@@ -132,7 +132,7 @@ class RegistrationController extends Controller
 //
 //        /** @var User $user */
 //        $user = \Yii::createObject([
-//            'class' => User::className(),
+//            'class' => User::class,
 //            'scenario' => 'connect',
 //            'username' => $account->username,
 //            'email' => $account->email,
@@ -204,7 +204,7 @@ class RegistrationController extends Controller
 //        }
 //
 //        /** @var ResendForm $model */
-//        $model = \Yii::createObject(ResendForm::className());
+//        $model = \Yii::createObject(ResendForm::class);
 //        $event = $this->getFormEvent($model);
 //
 //        $this->trigger(self::EVENT_BEFORE_RESEND, $event);

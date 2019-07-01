@@ -101,14 +101,14 @@ class Account extends ActiveRecord
      */
     public static function find()
     {
-        return Yii::createObject(AccountQuery::className(), [get_called_class()]);
+        return Yii::createObject(AccountQuery::class, [get_called_class()]);
     }
 
     public static function create(BaseClientInterface $client)
     {
         /** @var Account $account */
         $account = Yii::createObject([
-            'class' => static::className(),
+            'class' => static::class,
             'provider' => $client->getId(),
             'client_id' => $client->getUserAttributes()['id'],
             'data' => Json::encode($client->getUserAttributes()),
@@ -170,7 +170,7 @@ class Account extends ActiveRecord
 
         if (null === $account) {
             $account = Yii::createObject([
-                'class' => static::className(),
+                'class' => static::class,
                 'provider' => $client->getId(),
                 'client_id' => $client->getUserAttributes()['id'],
                 'data' => Json::encode($client->getUserAttributes()),
@@ -197,7 +197,7 @@ class Account extends ActiveRecord
         }
 
         $user = Yii::createObject([
-            'class' => User::className(),
+            'class' => User::class,
             'scenario' => 'connect',
             'username' => $account->username,
             'email' => $account->email,
@@ -220,7 +220,7 @@ class Account extends ActiveRecord
     protected static function getFinder()
     {
         if (static::$finder === null) {
-            static::$finder = Yii::$container->get(Finder::className());
+            static::$finder = Yii::$container->get(Finder::class);
         }
 
         return static::$finder;
