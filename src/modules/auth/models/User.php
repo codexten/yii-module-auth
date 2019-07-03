@@ -135,7 +135,6 @@ class User extends \codexten\yii\models\User implements IdentityInterface
             ],
 
             // password rules
-            'passwordRequired' => ['password', 'required'],
             'passwordLength' => ['password', 'string', 'min' => 6, 'max' => 72,],
         ];
     }
