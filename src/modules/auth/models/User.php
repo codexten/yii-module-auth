@@ -140,6 +140,16 @@ class User extends \codexten\yii\models\User implements IdentityInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        return $behaviors;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function validateAuthKey($authKey)
