@@ -12,11 +12,20 @@ trait RegistrationRegisterActionTrait
     use AjaxValidationTrait;
     use ActionTrait;
 
+    /**
+     * @var array|callable
+     */
+    public $defaultModelConfig=[];
+
     public function processRegistrationForm($map = [])
     {
 //        if (!$this->module->enableRegistration) {
 //            throw new NotFoundHttpException();
 //        }
+
+        if (is_callable($this->defaultModelConfig)) {
+            $this->defaultModelConfig = call_user_func($this->defaultModelConfig);
+        }
 
         /** @var RegistrationForm $model */
         $model = Yii::createObject($this->modelClass);

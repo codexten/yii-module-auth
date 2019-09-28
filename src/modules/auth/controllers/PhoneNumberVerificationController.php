@@ -21,7 +21,6 @@ class PhoneNumberVerificationController extends Controller
      */
     public $modelClass;
 
-
     public function actionIndex($resent = false)
     {
         if (\Yii::$app->userSettings->get('auth.mobileVerified')) {
@@ -41,7 +40,6 @@ class PhoneNumberVerificationController extends Controller
 
             return $this->refresh();
         }
-
 
         return $this->render('index', ['model' => $model]);
     }

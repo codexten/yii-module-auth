@@ -14,11 +14,25 @@ class RegistrationRegisterAction extends Action
     const EVENT_BEFORE_REGISTER = 'beforeRegister';
     const EVENT_AFTER_REGISTER = 'afterRegister';
 
+    public $beforeAction = false;
+
     /**
      * {@inheritDoc}
      */
     public function run()
     {
+        echo "<pre>";
+        var_dump($this->beforeAction);
+        echo "<pre>";
+        exit();
+        if (is_callable($this->beforeAction)) {
+            
+            $beforeAction = call_user_func($this->beforeAction);
+            if ($beforeAction) {
+                return $beforeAction;
+            }
+        }
+
         if ($this->processRegistrationForm()) {
             return;
         }

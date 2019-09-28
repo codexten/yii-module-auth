@@ -12,12 +12,19 @@ use codexten\yii\base\Module;
 
 class AuthModule extends Module
 {
+
+    // registration configuration
     /**
      * @var bool Whether to enable registration.
      */
     public $enableRegistration = false;
 
     public $enableAutoLoginAfterRegistration = false;
+
+    /**
+     * @var bool|array
+     */
+    public $registrationSteps = false;
 
 
     // old settings may deprecate
