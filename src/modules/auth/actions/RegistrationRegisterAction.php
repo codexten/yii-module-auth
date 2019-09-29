@@ -21,10 +21,6 @@ class RegistrationRegisterAction extends Action
      */
     public function run()
     {
-        echo "<pre>";
-        var_dump($this->beforeAction);
-        echo "<pre>";
-        exit();
         if (is_callable($this->beforeAction)) {
             
             $beforeAction = call_user_func($this->beforeAction);
