@@ -17,8 +17,6 @@ use \codexten\yii\modules\auth\models\query\UserProfileQuery;
  * @property string $middle_name
  * @property string $last_name
  * @property string $phone_no
- * @property int $created_at
- * @property int $updated_at
  */
 class UserProfile extends ActiveRecord
 {
@@ -37,7 +35,6 @@ class UserProfile extends ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'integer'],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 255],
             [['phone_no'], 'string', 'max' => 50],
         ];
@@ -54,8 +51,6 @@ class UserProfile extends ActiveRecord
             'middle_name' => Yii::t('app', 'Middle Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'phone_no' => Yii::t('app', 'Phone No'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 

@@ -23,8 +23,6 @@ class M191573199893Create_user_profile_table extends Migration
             'middle_name' => $this->string(255),
             'last_name' => $this->string(255),
             'phone_no' => $this->string(50),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
         ]);
     }
 
