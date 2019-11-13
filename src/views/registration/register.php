@@ -1,11 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jomon
- * Date: 10/12/18
- * Time: 9:53 PM
- */
 
+use codexten\yii\modules\auth\AuthModule;
+use codexten\yii\web\User;
 
 /**
  * @var yii\web\View $this
@@ -15,9 +11,8 @@
 
 $this->title = Yii::t('codexten:user', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
+?>
 
-use codexten\yii\modules\auth\AuthModule;
-use codexten\yii\web\User; ?>
 <div class="page-auth-account-login">
 
     <?= $this->render('@moduleAuth/views/registration/register/_form.php', [
